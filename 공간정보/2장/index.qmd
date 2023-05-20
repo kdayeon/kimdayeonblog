@@ -1,0 +1,99 @@
+---
+title: "2장"
+author: "kim dayeon"
+date: today
+categories: [news, code, analysis]
+image: "gg.jpg"
+---
+
+< 1. 지도 겹쳐 그리기/ 중심 원 / 특정 나라 확장
+
+필요 패키지 로드
+
+library(dplyr)
+library(sf)
+library(raster)
+library(spData)
+library(spDataLarge)
+
+# 지도 겹쳐 그리기
+st_union : 하나의 좌표로 합침
+reset = FALSE : 지도 위 다른 요소를 추가할 수 있음(모든 플롯 유지)
+add = TRUE : 지도 위 다른 지도 겹처 그리기
+
+```{r}
+library(dplyr)
+library(sf)
+library(raster)
+library(spData)
+library(spDataLarge)
+
+world_asia = world[world$continent == "Asia", ]
+asia = st_union(world_asia) #아시아 국가 합치기
+
+#아시아만 빨간색으로 표시
+plot(world["pop"], reset = FALSE) #reset = FLASE이면 지도 요소를 더 추가할 수 있는 모드로 플롯을 유지
+plot(asia, add = TRUE, col = "red")
+```
+# 중심 원 씌우기
+st_centroid() ; 폴리곤의 중심점을 계산하는 함수
+of_largest = TRUE : 전체 폴리곤의 중앙
+cex : 원 크기
+
+```{r}
+plot(world["continent"], reset = FALSE)
+cex = sqrt(world$pop) / 10000 #pop변수에 제곱근을 취하고 1000으로 나누어서 지도 시각화를 위해 크기를 맞춤
+world_cents = st_centroid(world, of_largest = TRUE) #다각형(국가별) 중앙점 계산
+plot(st_geometry(world_cents), add = TRUE, cex = cex) #인구크기에 따라 대륙별 중앙점에 원그려넣기
+```
+
+# 특정 나라 중심 확장
+expandBB : 각 방향으로 경계 확장
+lwd: 선굵기
+world_assia[0] : 아시아에 대한 표시 0은 색 표시하겠다
+
+
+```{r}
+india = world[world$name_long == "India", ]
+plot(st_geometry(india), expandBB = c(0, 0.2, 0.1, 1), col = "gray", lwd = 3)
+plot(world_asia[0], add = TRUE)
+```
+
+# sf class : 위치 + 속성
+st_sf() : 위치와 속성 데이터를 통합하는 함수
+
+```{r}
+lnd_point = st_point(c(0.1, 51.5))  #런던 좌표
+lnd_geom = st_sfc(lnd_point, crs = 4326) #좌표1,2  # crs = 4326 : 좌표계 정보 추가
+lnd_attrib = data.frame(                          
+  name = "London",
+  temperature = 25,
+  date = as.Date("2017-06-21")
+) #속성정보, dat.frame으로 만듬
+lnd_sf = st_sf(lnd_attrib, geometry = lnd_geom)  #st_sf : 위치,속성 정보를 합침
+```
+# Raster data
+
+res : 해상도
+vals : 값 입력 ex> vals=1:64 > 1~64까지 입력해라
+
+* 1. RasteLayer class 
+래스터 객체중에서 가장 간단한 형태의 클래스, 한개의 층으로 구성되어있음
+```{r}
+my_raster = raster(nrows=8,ncols = 8,res = 0.5,xmn=-2.0,xmx=2.0,ymn = -2.0,ymx=2.0,vals = 1:64)
+my_raster
+plot(my_raster,main="my raster (64 cells = 8 rows * 8 cols)")
+```
+
+* 2. RasterBrick class
+
+```{r}
+multi_raster_file = system.file("raster/landsat.tif", package = "spDataLarge")
+r_brick = brick(multi_raster_file)
+
+r_brick
+nlayers(r_brick)
+
+plot(r_brick) #plotting RasterBrick object with 4 layers
+
+```

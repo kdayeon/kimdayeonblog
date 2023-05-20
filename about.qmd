@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: "my blog"
 image: profile.jpg
 about:
   template: jolla
@@ -16,4 +16,3 @@ about:
 
 ---
 
-About this blog

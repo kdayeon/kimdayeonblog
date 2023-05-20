@@ -1,0 +1,7 @@
+---
+title: "3장"
+author: "kim dayeon"
+date: today
+categories: [news, code, analysis]
+image: "ggplot.jpg"
+---

@@ -1,0 +1,235 @@
+---
+title: "데이터 마이닝 정리"
+author: "kimdayeon"
+date: today
+categories: [news, code, analysis]
+image: "yes.jpg"
+---
+
+파이썬 기초 정리 입니다.
+
+# Numpy 기본
+
+< 용어 >
+
+각 차원을 축(axis)
+축의 개수 : 링크(rank)
+
+배열의 축 길이 : 배열의 크기(shape)
+
+배열의 사이즈(size) = 전체 원소의 개수
+
+축의 길이를 모두 곱해 구할수 있음 (가령, 3x4 = 12)
+
+
+```{python}
+import numpy as np
+
+np. zeros((3,4))
+```
+위의 3x4 행렬은 랭크 2인 배열 (즉, 2차원)
+
+첫 번째 축의 길이 : 3 두번째 축의 길이 : 4
+
+위 행렬의 크기 : (3,4)
+
+랭크는 크기의 길이와 같음
+
+< N-차원 배열 >
+임의로 랭크 수를 가진 N-차원 배열을 만들 수 있음
+
+-> 크기가 (2,3,4)인 3D배열(랭크=3)을 만들어라
+
+```{python}
+# 2개의 배열을 3행 4열로 만들었음
+np.zeros((2,3,4))
+
+```
+**1. 타입 알기** 
+type()을 사용해섭 배열의 타입을 알수 있다.
+
+```{python}
+type(np.zeros((3,4)))
+
+```
+**2. 0대신 1로 채움**
+
+```{python}
+np.ones((3,4))
+```
+**3. 주어진 값으로 채워넣기**
+
+```{python}
+np.full((3,4),np.pi)
+``` 
+**4. 초기화 되지 않은 2x3크기 배열을 만듬**
+
+```{python}
+np.empty((2,3))
+```
+**5. array 함수는 파이썬 리스트를 사용하여 ndarray 초기화**
+```{python}
+np.array([[1,2,3,4],[10,20,30,40]])
+[[1,2,3,4],[10,20,30,40]] # -> 위 결과와 동일한 결과
+```
+
+**6. arrange 기본**
+
+```{python}
+np.arange(1,5) # -> 1~5까지 (마지막 제외)
+
+np.arange(1,5,7) #-> 간격 정하기
+```
+
+
+# 7. `부동소수`
+원소의 개수가 일정하지 않음
+
+부동 소수 오차 때문에, 최댓값은 4/3 또는 5/3이됨
+```{python}
+print(np.arange(0, 5/3, 1/3))
+print(np.arange(0, 5/3, 0.333333333))
+print(np.arange(0, 5/3, 0.333333334))
+ ```
+
+
+# 8. for loops 사용
+ 전체 array에 대한 인산 수행 가능 (속도 더 빠르고 적은 메모리 사용)
+
+## `np.linspace` / `np.rand & np.randn`
+
+1 > 부동 소수를 사용할 땐 arrange 대신 `linspace`함수를 사용 하는것이 좋음
+
+linspace ? : 지정된 개수만큼 두 값 사이를 나눈 배열을 반환
+
+2 > `np.rand & np.randn` 
+random 모듈안 ndarray를 랜덤한 값으로 초기화할 수 있음
+-> np.fromfunction도 같은 함수
+
+```{python}
+## Ex code >
+# 1 > linspace
+print(np.linspace(0, 5/3,6)) #0에서 5/3으로 나눔
+```
+```{python}
+# 2 > np.rand & np.randn
+np.random.rand(3,4)
+
+np.random.randn(3,4)
+```
+
+## 배열 데이터
+**dtype** : 데이터 타입 확인 및 지정
+
+* 데이터 타입 종류 : int8, int16, int32, int64, uint8|16|32|64, float16|32|64, complex64|128
+```{python}
+#확인
+c = np.arange(1.0,5.0)
+print(c.dtype,c)
+
+#지정
+d = np.arange(1,5,dtype = np.complex64)
+print(d.dtype,d)
+```
+**itemsize** : 아이템의 크기(바이트) 반환
+
+```{python}
+e = np.arange(1, 5, dtype=np.complex64)
+e.itemsize
+```
+
+## 배열 크기 변경
+
+* `ndarray`의 `shape` 속성을 지정하면 간단히 크기를 바꿀 수 있습니다. 배열의 원소 개수는 동일하게 유지됩니다.
+
+(1,2,3) -> 1: 차원 2: 행 , 3: 열
+
+```{python}
+g = np.arange(24)  #행
+print(g)
+print("랭크:", g.ndim)
+```
+
+
+```{python}
+g.shape = (6, 4)  #행,열
+print(g)
+print("랭크:", g.ndim)
+
+```
+
+```{python}
+
+g.shape = (2, 3, 4)   #차원, 행, 열
+print(g)
+print("랭크:", g.ndim)
+
+#Ex > 위의 17을 뽑아라
+g[1,1,1]
+```
+
+**reshape** : 새로운 객체 반환
+
+```{python}
+g2 = g.reshape(4,6)  #4행 6열로 변환
+print(g2)
+print("랭크:", g2.ndim)
+```
+**지정 숫자 변환**
+```{python}
+g[1,2] = 999
+g2  #결과 보면 1행2열이 999로 변환한것을 확인
+```
+**ravel** : 동일한 데이터를 가리키는 새로운 1차원 ndarray를 반환
+
+```{python}
+g.ravel()
+```
+
+## 산술 연산 
+: +,-,*,/,//,** 등
+
+## 규칙 
+**1** 배열의 랭크가 동일하지 않으면 랭크가 맞을 때 까지 랭크가 작은 배열 앞에 1을 추가함
+```{python}
+h = np.arange(5).reshape(1,1,5)
+h
+```
+수를 더할수 있음
+```{python}
+h + [10, 20, 30, 40, 50]  
+```
+
+**2**
+가장 큰 배열의 크기에 맞춰 동작해야함
+```{python}
+k = np.arange(6).reshape(2, 3)
+k
+```
+```{python}
+k + [[100], [200]]  # 다음과 같습니다: k + [[100, 100, 100], [200, 200, 200]]
+```
+**규칙 1 + 2**
+```{python}
+k + [100, 200, 300]  # 규칙 1 적용: [[100, 200, 300]], 규칙 2 적용: [[100, 200, 300], [100, 200, 300]]
+```
+
+# 업캐스팅
+dtype이 다른 배열을 합칠 때 넘파이는(실제 값에 상관없이) 모든 값을 다룰 수 있는 타입으로 업캐스팅 함
+
+```{python}
+k1 = np.arange(0, 5, dtype=np.uint8)  
+print(k1.dtype, k1)
+```
+
+```{python}
+k2 = k1 + np.array([5, 6, 7, 8, 9], dtype=np.int8)
+print(k2.dtype, k2)
+```
+
+#  조건 연산자
+원소별로 적용가능
+```{python}
+m = np.array([20, -5, 30, 40])
+m < [15, 16, 35, 36]
+```

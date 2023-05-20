@@ -2,17 +2,36 @@ project:
   type: website
 
 website:
-  title: "kimdayeon"
+  title: "dayeon blog"
   navbar:
+     background: lightblue
+     search: true
+     left:
+      - text: "start blog ˚₊·—̳͟͞͞♡ " 
+        file: about.qmd
     right:
       - about.qmd
       - icon: github
         href: https://github.com/
       - icon: twitter
         href: https://twitter.com
+sidebar:
+    style: "floating"
+    type : "dark"
+    search: true
+    contents:
+      - section: "Basics"
+        contents:
+          - 공간정보.qmd
+      - section: "데이터 마이닝"
+        contents :
+           - Exercise.qmd
+           - Data.qmd
+           - Datamining.qmd
+
 format:
   html:
-    theme: cosmo
+    theme: spacelab
     css: styles.css
 
 
