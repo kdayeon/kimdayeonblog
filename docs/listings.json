@@ -1,0 +1,31 @@
+[
+  {
+    "listing": "/Datamining.html",
+    "items": [
+      "/Datamining/geopandas/0_install_geopandas.html",
+      "/Datamining/loops/loop_speed.html",
+      "/Datamining/new-posting/indesx.html",
+      "/Datamining/numpy/numpy.html",
+      "/Datamining/pandas/pandas.html",
+      "/Datamining/seaborn/seaborn & matplotlib.html",
+      "/Datamining/Tools_matplotlib/Tools_matplotlib.html"
+    ]
+  },
+  {
+    "listing": "/Exercise.html",
+    "items": [
+      "/Exercise/1. Your First Map exercise.html",
+      "/Exercise/2. Coordinate Reference Systems.html",
+      "/Exercise/3. Interactive Maps.html",
+      "/Exercise/4. Manipulating Geospatial Data.html",
+      "/Exercise/5. Proximity Analysis.html"
+    ]
+  },
+  {
+    "listing": "/공간정보.html",
+    "items": [
+      "/공간정보/2장/index.html",
+      "/공간정보/3장/index.html"
+    ]
+  }
+]
