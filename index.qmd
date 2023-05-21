@@ -1,6 +1,6 @@
 ---
 title: "Blog"
-image: profile.jpeg
+image: profile.jpg
 about: jolla
 page-layout: full
 title-block-banner: true
