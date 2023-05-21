@@ -523,33 +523,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="각-새의-여행-시작점과-끝점-알아내기" class="level1">
-<h1>각 새의 여행 시작점과 끝점 알아내기</h1>
+<section id="각-새의-여행-시작점과-끝점-알아내기-part-1" class="level1">
+<h1>각 새의 여행 시작점과 끝점 알아내기 (part 1)</h1>
 <ol start="3" type="1">
 <li>Where does each bird start and end its journey? (Part 1)?</li>
 </ol>
-<div class="cell" data-execution_count="27">
+<div class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GeoDataFrame showing path for each bird</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#각 새의 경로를 표시함 </span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>path_df <span class="op">=</span> birds.groupby(<span class="st">"tag-local-identifier"</span>)[<span class="st">'geometry'</span>].<span class="bu">apply</span>(<span class="bu">list</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: LineString(x)).reset_index()</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>path_gdf <span class="op">=</span> gpd.GeoDataFrame(path_df, geometry<span class="op">=</span>path_df.geometry)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>path_gdf.crs <span class="op">=</span> {<span class="st">'init'</span> :<span class="st">'epsg:4326'</span>}</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># GeoDataFrame showing starting point for each bird</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 새의 시작점 표시</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>start_df <span class="op">=</span> birds.groupby(<span class="st">"tag-local-identifier"</span>)[<span class="st">'geometry'</span>].<span class="bu">apply</span>(<span class="bu">list</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: x[<span class="dv">0</span>]).reset_index()</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>start_gdf <span class="op">=</span> gpd.GeoDataFrame(start_df, geometry<span class="op">=</span>start_df.geometry)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>start_gdf.crs <span class="op">=</span> {<span class="st">'init'</span> :<span class="st">'epsg:4326'</span>}</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Show first five rows of GeoDataFrame</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>start_gdf.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>path_gdf.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>c:\Users\jiyeo\anaconda3\envs\dayeon\Lib\site-packages\pyproj\crs\crs.py:141: FutureWarning: '+init=&lt;authority&gt;:&lt;code&gt;' syntax is deprecated. '&lt;authority&gt;:&lt;code&gt;' is the preferred initialization method. When making the change, be mindful of axis order changes: https://pyproj4.github.io/pyproj/stable/gotchas.html#axis-order-changes-in-proj-6
-  in_crs_string = _prepare_from_proj_string(in_crs_string)
-c:\Users\jiyeo\anaconda3\envs\dayeon\Lib\site-packages\pyproj\crs\crs.py:141: FutureWarning: '+init=&lt;authority&gt;:&lt;code&gt;' syntax is deprecated. '&lt;authority&gt;:&lt;code&gt;' is the preferred initialization method. When making the change, be mindful of axis order changes: https://pyproj4.github.io/pyproj/stable/gotchas.html#axis-order-changes-in-proj-6
   in_crs_string = _prepare_from_proj_string(in_crs_string)</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="27">
+<div class="cell-output cell-output-display" data-execution_count="29">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>tag-local-identifier</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>30048</td>
+      <td>LINESTRING (-90.12992 20.73242, -56.29394 -10....</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>30054</td>
+      <td>LINESTRING (-93.60861 46.50563, -63.28897 -5.7...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>30198</td>
+      <td>LINESTRING (-80.31036 25.92545, -88.14608 17.5...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>30263</td>
+      <td>LINESTRING (-76.78146 42.99209, -62.90648 -7.8...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>30275</td>
+      <td>LINESTRING (-76.78213 42.99207, -60.26131 -15....</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GeoDataFrame showing starting point for each bird</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 새의 시작점 표시</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>start_df <span class="op">=</span> birds.groupby(<span class="st">"tag-local-identifier"</span>)[<span class="st">'geometry'</span>].<span class="bu">apply</span>(<span class="bu">list</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: x[<span class="dv">0</span>]).reset_index()</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>start_gdf <span class="op">=</span> gpd.GeoDataFrame(start_df, geometry<span class="op">=</span>start_df.geometry)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>start_gdf.crs <span class="op">=</span> {<span class="st">'init'</span> :<span class="st">'epsg:4326'</span>}</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Show first five rows of GeoDataFrame</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>start_gdf.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\jiyeo\anaconda3\envs\dayeon\Lib\site-packages\pyproj\crs\crs.py:141: FutureWarning: '+init=&lt;authority&gt;:&lt;code&gt;' syntax is deprecated. '&lt;authority&gt;:&lt;code&gt;' is the preferred initialization method. When making the change, be mindful of axis order changes: https://pyproj4.github.io/pyproj/stable/gotchas.html#axis-order-changes-in-proj-6
+  in_crs_string = _prepare_from_proj_string(in_crs_string)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="30">
 
 <div>
 
@@ -592,12 +638,385 @@ c:\Users\jiyeo\anaconda3\envs\dayeon\Lib\site-packages\pyproj\crs\crs.py:141: Fu
 </div>
 </div>
 </div>
-<p>새의 끝점을 data frame</p>
-<div class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>end_gdf <span class="op">=</span> {<span class="st">'init'</span>: <span class="st">'epsg:4326'</span>}</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>birds.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="28">
+</section>
+<section id="새의-끝점을-data-frame으로-만드는-셀-생성" class="level1">
+<h1>새의 끝점을 data frame으로 만드는 셀 생성</h1>
+<p>형식은 두개의 열 (“tag-local-identifier” 및 “geometry”)이 있어 start_gdf(시작점)과 형식이 동일해야함 /geometry 열에 point 객체가 포함되야함</p>
+<p>end_gdf(끝점)의 crs는 init : crs: 4326으로 설정합니다.</p>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>end_gdf <span class="op">=</span> birds.groupby(<span class="st">"tag-local-identifier"</span>)[<span class="st">'geometry'</span>].<span class="bu">apply</span>(<span class="bu">list</span>).<span class="bu">apply</span>(<span class="kw">lambda</span> x: x[<span class="op">-</span><span class="dv">1</span>]).reset_index()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>end_gdf <span class="op">=</span> gpd.GeoDataFrame(end_gdf, geometry<span class="op">=</span>end_gdf.geometry)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>end_gdf.crs <span class="op">=</span> {<span class="st">'init'</span> :<span class="st">'epsg:4326'</span>}</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Show first five rows of GeoDataFrame</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>start_gdf.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\jiyeo\anaconda3\envs\dayeon\Lib\site-packages\pyproj\crs\crs.py:141: FutureWarning: '+init=&lt;authority&gt;:&lt;code&gt;' syntax is deprecated. '&lt;authority&gt;:&lt;code&gt;' is the preferred initialization method. When making the change, be mindful of axis order changes: https://pyproj4.github.io/pyproj/stable/gotchas.html#axis-order-changes-in-proj-6
+  in_crs_string = _prepare_from_proj_string(in_crs_string)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>tag-local-identifier</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>30048</td>
+      <td>POINT (-90.12992 20.73242)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>30054</td>
+      <td>POINT (-93.60861 46.50563)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>30198</td>
+      <td>POINT (-80.31036 25.92545)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>30263</td>
+      <td>POINT (-76.78146 42.99209)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>30275</td>
+      <td>POINT (-76.78213 42.99207)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="각-새는-어디에서-여행을-시작하고-끝납니까" class="level1">
+<h1>각 새는 어디에서 여행을 시작하고 끝납니까?</h1>
+<ol start="4" type="1">
+<li>Where does each bird start and end its journey? (Part 2)?</li>
+</ol>
+<ul>
+<li>path_gdf,start_gdf &amp; end_gdf 를 사용하여 모든 새의 경로를 시각화 해라 미국 GeoDataFame을 사용할수 있음</li>
+</ul>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> americas.plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>), color<span class="op">=</span><span class="st">'whitesmoke'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>path_gdf.plot(ax <span class="op">=</span> ax, markersize<span class="op">=</span><span class="dv">5</span>,color <span class="op">=</span> <span class="st">'lightblue'</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>start_gdf.plot(ax <span class="op">=</span> ax, markersize<span class="op">=</span><span class="dv">5</span>,color <span class="op">=</span> <span class="st">'red'</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>end_gdf.plot(ax <span class="op">=</span> ax, markersize<span class="op">=</span><span class="dv">5</span>,color<span class="op">=</span><span class="st">"darkgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2. Coordinate Reference Systems_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="남미의-보호지역은-어딘가-part-1" class="level1">
+<h1>남미의 보호지역은 어딘가? (part 1)</h1>
+<p>새들은 남미 어딘가에 도착하는데 그 새들은 보호지역으로 가고있나요?</p>
+<ul>
+<li>남아메리카의 모든 모호지역 위치를 (GeoDataFrame)protected_areas를 생성해라</li>
+</ul>
+<div class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Path of the shapefile to load</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>protected_areas<span class="op">=</span> gpd.read_file(<span class="st">"D:/archive (1)/SAPA_Aug2019-shapefile/SAPA_Aug2019-shapefile/SAPA_Aug2019-shapefile-polygons.shp"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>protected_areas.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>WDPAID</th>
+      <th>WDPA_PID</th>
+      <th>PA_DEF</th>
+      <th>NAME</th>
+      <th>ORIG_NAME</th>
+      <th>DESIG</th>
+      <th>DESIG_ENG</th>
+      <th>DESIG_TYPE</th>
+      <th>IUCN_CAT</th>
+      <th>INT_CRIT</th>
+      <th>...</th>
+      <th>GOV_TYPE</th>
+      <th>OWN_TYPE</th>
+      <th>MANG_AUTH</th>
+      <th>MANG_PLAN</th>
+      <th>VERIF</th>
+      <th>METADATAID</th>
+      <th>SUB_LOC</th>
+      <th>PARENT_ISO</th>
+      <th>ISO3</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>14067.0</td>
+      <td>14067</td>
+      <td>1</td>
+      <td>Het Spaans Lagoen</td>
+      <td>Het Spaans Lagoen</td>
+      <td>Ramsar Site, Wetland of International Importance</td>
+      <td>Ramsar Site, Wetland of International Importance</td>
+      <td>International</td>
+      <td>Not Reported</td>
+      <td>Not Reported</td>
+      <td>...</td>
+      <td>Not Reported</td>
+      <td>Not Reported</td>
+      <td>Not Reported</td>
+      <td>Management plan is not implemented and not ava...</td>
+      <td>State Verified</td>
+      <td>1856</td>
+      <td>Not Reported</td>
+      <td>NLD</td>
+      <td>ABW</td>
+      <td>POLYGON ((-69.97523 12.47379, -69.97523 12.473...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>14003.0</td>
+      <td>14003</td>
+      <td>1</td>
+      <td>Bubali Pond Bird Sanctuary</td>
+      <td>Bubali Pond Bird Sanctuary</td>
+      <td>Bird Sanctuary</td>
+      <td>Bird Sanctuary</td>
+      <td>National</td>
+      <td>Not Reported</td>
+      <td>Not Applicable</td>
+      <td>...</td>
+      <td>Not Reported</td>
+      <td>Not Reported</td>
+      <td>Not Reported</td>
+      <td>Not Reported</td>
+      <td>State Verified</td>
+      <td>1899</td>
+      <td>Not Reported</td>
+      <td>NLD</td>
+      <td>ABW</td>
+      <td>POLYGON ((-70.04734 12.56329, -70.04615 12.563...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>555624439.0</td>
+      <td>555624439</td>
+      <td>1</td>
+      <td>Arikok National Park</td>
+      <td>Arikok National Park</td>
+      <td>National Park</td>
+      <td>National Park</td>
+      <td>National</td>
+      <td>Not Reported</td>
+      <td>Not Applicable</td>
+      <td>...</td>
+      <td>Non-profit organisations</td>
+      <td>Non-profit organisations</td>
+      <td>Fundacion Parke Nacional Arikok</td>
+      <td>Not Reported</td>
+      <td>State Verified</td>
+      <td>1899</td>
+      <td>Not Reported</td>
+      <td>NLD</td>
+      <td>ABW</td>
+      <td>MULTIPOLYGON (((-69.96302 12.48384, -69.96295 ...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>303894.0</td>
+      <td>303894</td>
+      <td>1</td>
+      <td>Madidi</td>
+      <td>Madidi</td>
+      <td>Area Natural de Manejo Integrado</td>
+      <td>Natural Integrated Management Area</td>
+      <td>National</td>
+      <td>Not Reported</td>
+      <td>Not Applicable</td>
+      <td>...</td>
+      <td>Federal or national ministry or agency</td>
+      <td>Not Reported</td>
+      <td>Not Reported</td>
+      <td>Not Reported</td>
+      <td>State Verified</td>
+      <td>1860</td>
+      <td>BO-L</td>
+      <td>BOL</td>
+      <td>BOL</td>
+      <td>POLYGON ((-68.59060 -14.43388, -68.59062 -14.4...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>303893.0</td>
+      <td>303893</td>
+      <td>1</td>
+      <td>Apolobamba</td>
+      <td>Apolobamba</td>
+      <td>Area Natural de Manejo Integado Nacional</td>
+      <td>National Natural Integrated Management Area</td>
+      <td>National</td>
+      <td>Not Reported</td>
+      <td>Not Applicable</td>
+      <td>...</td>
+      <td>Federal or national ministry or agency</td>
+      <td>Not Reported</td>
+      <td>Not Reported</td>
+      <td>Not Reported</td>
+      <td>State Verified</td>
+      <td>1860</td>
+      <td>BO-L</td>
+      <td>BOL</td>
+      <td>BOL</td>
+      <td>POLYGON ((-69.20949 -14.73334, -69.20130 -14.7...</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 29 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="남비의-보호지역은-part-2" class="level1">
+<h1>남비의 보호지역은 ? (part 2)</h1>
+<ul>
+<li>남아메리카의 보호지역 위치 표시하기</li>
+<li>(GeoDataFame)protected_areas 사용해 plot그리기</li>
+<li>일부 보호 지역은 육지에 있고 다른 지역은 해수에 있음을 알수 있다.</li>
+</ul>
+<div class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>south_america <span class="op">=</span> americas.loc[americas[<span class="st">'continent'</span>]<span class="op">==</span><span class="st">'South America'</span>]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> south_america.plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>), color<span class="op">=</span><span class="st">'whitesmoke'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>protected_areas.plot(ax <span class="op">=</span> ax, markersize<span class="op">=</span><span class="dv">5</span>,color <span class="op">=</span> <span class="st">'lightblue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="43">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2. Coordinate Reference Systems_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="남아메리카의-몇-퍼센트가-보호됩니까" class="level1">
+<h1>남아메리카의 몇 퍼센트가 보호됩니까?</h1>
+<ul>
+<li><ol type="1">
+<li>남미의 모든 보호 토지(해양 지역 제외) 총면적 계산하기</li>
+</ol></li>
+</ul>
+<p>“REP_AREA” 및 “REP_M_AREA” 열사용</p>
+<div class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>P_Area <span class="op">=</span> <span class="bu">sum</span>(protected_areas[<span class="st">'REP_AREA'</span>]<span class="op">-</span>protected_areas[<span class="st">'REP_M_AREA'</span>])</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"South America has </span><span class="sc">{}</span><span class="st"> square kilometers of protected areas."</span>.<span class="bu">format</span>(P_Area))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>south_america.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>South America has 5396761.9116883585 square kilometers of protected areas.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>pop_est</th>
+      <th>continent</th>
+      <th>name</th>
+      <th>iso_a3</th>
+      <th>gdp_md_est</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9</th>
+      <td>44938712.0</td>
+      <td>South America</td>
+      <td>Argentina</td>
+      <td>ARG</td>
+      <td>445445</td>
+      <td>MULTIPOLYGON (((-68.63401 -52.63637, -68.25000...</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>18952038.0</td>
+      <td>South America</td>
+      <td>Chile</td>
+      <td>CHL</td>
+      <td>282318</td>
+      <td>MULTIPOLYGON (((-68.63401 -52.63637, -68.63335...</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>3398.0</td>
+      <td>South America</td>
+      <td>Falkland Is.</td>
+      <td>FLK</td>
+      <td>282</td>
+      <td>POLYGON ((-61.20000 -51.85000, -60.00000 -51.2...</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>3461734.0</td>
+      <td>South America</td>
+      <td>Uruguay</td>
+      <td>URY</td>
+      <td>56045</td>
+      <td>POLYGON ((-57.62513 -30.21629, -56.97603 -30.1...</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>211049527.0</td>
+      <td>South America</td>
+      <td>Brazil</td>
+      <td>BRA</td>
+      <td>1839758</td>
+      <td>POLYGON ((-53.37366 -33.76838, -53.65054 -33.2...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>각 폴리곤의 면적 속성 (crs로 epsg 3035사용) 국가의 면적 계산 후 결과 합치기</p>
+<p>” 답을 평방 킬로미터 단위로 변경”</p>
+<div class="cell" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>totalArea <span class="op">=</span> <span class="bu">sum</span>(south_america.geometry.to_crs(epsg<span class="op">=</span><span class="dv">3035</span>).area) <span class="op">/</span> <span class="dv">10</span><span class="op">**</span><span class="dv">6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="53">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 보호되는 남미의 비율 계산하기</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>percentage_protected <span class="op">=</span> P_Area<span class="op">/</span>totalArea</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Approximately </span><span class="sc">{}% o</span><span class="st">f South America is protected.'</span>.<span class="bu">format</span>(<span class="bu">round</span>(percentage_protected<span class="op">*</span><span class="dv">100</span>, <span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Approximately 30.39% of South America is protected.</code></pre>
+</div>
+</div>
+</section>
+<section id="남아메리카의-새들은-어디에-있나" class="level1">
+<h1>8. 남아메리카의 새들은 어디에 있나?</h1>
+<p>-&gt; 보호구역에 새들이 있나요?</p>
+<ul>
+<li>남미에 있는 새의 위치를 plot하세요</li>
+<li>(토지구성요소가 없는) 순수해양지역인 “MARINE”열을 사용할수 있습니다. (protected_areas[protected_areas[‘MARINE’]!=‘2’] 의 행만 표시) ’protected_areas` 의 모든행</li>
+</ul>
+<div class="cell" data-execution_count="58">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>birds.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="58">
 
 <div>
 
@@ -656,6 +1075,19 @@ c:\Users\jiyeo\anaconda3\envs\dayeon\Lib\site-packages\pyproj\crs\crs.py:141: Fu
   </tbody>
 </table>
 </div>
+</div>
+</div>
+<div class="cell" data-execution_count="60">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> south_america.plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>), color<span class="op">=</span><span class="st">'whitesmoke'</span>, linestyle<span class="op">=</span><span class="st">':'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>protected_areas[protected_areas[<span class="st">'MARINE'</span>]<span class="op">!=</span><span class="st">'2'</span>].plot(ax <span class="op">=</span> ax, markersize<span class="op">=</span><span class="dv">5</span>,color <span class="op">=</span> <span class="st">'lightblue'</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>birds[birds.geometry.y <span class="op">&lt;</span> <span class="dv">0</span>].plot(ax <span class="op">=</span> ax, markersize<span class="op">=</span><span class="dv">5</span>,color<span class="op">=</span><span class="st">"darkgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="60">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2. Coordinate Reference Systems_files/figure-html/cell-17-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 
