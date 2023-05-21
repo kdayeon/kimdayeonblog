@@ -722,7 +722,7 @@ Freq: 2H, dtype: float64</code></pre>
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>temp_series_freq_2H.plot(kind<span class="op">=</span><span class="st">"bar"</span>)</span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="pandas_files/figure-html/cell-40-output-1.png" class="img-fluid"></p>
+<p><img src="pandas_files/figure-html/cell-39-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>2시간 간격으로 어떻게 값이 수집되었는지 확인해 보세요. 예를 들어 6-8pm 간격을 보면 6:30pm에서 <code>5.1</code>이고 7:30pm에서 <code>6.1</code>입니다. 리샘플링 후에 <code>5.1</code>과 <code>6.1</code>의 평균인 <code>5.6</code> 하나를 얻었습니다. 평균말고 어떤 집계 함수(aggregation function)도 사용할 수 있습니다. 예를 들어 각 기간에서 최솟값을 찾을 수 있습니다:</p>
@@ -800,7 +800,7 @@ Freq: 15T, dtype: float64</code></pre>
 <span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="pandas_files/figure-html/cell-45-output-1.png" class="img-fluid"></p>
+<p><img src="pandas_files/figure-html/cell-44-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -992,7 +992,7 @@ Freq: Q-DEC, dtype: int64</code></pre>
 <div class="sourceCode cell-code" id="cb108"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>quarterly_revenue.plot(kind<span class="op">=</span><span class="st">"line"</span>)</span>
 <span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="pandas_files/figure-html/cell-59-output-1.png" class="img-fluid"></p>
+<p><img src="pandas_files/figure-html/cell-58-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p><code>to_timestamp</code>를 호출해서 기간을 타임스탬프로 변경할 수 있습니다. 기본적으로 기간의 첫 번째 날을 반환합니다. 하지만 <code>how</code>와 <code>freq</code>를 지정해서 기간의 마지막 시간을 얻을 수 있습니다:</p>
@@ -4130,7 +4130,7 @@ dtype: bool</code></pre>
 <div class="sourceCode cell-code" id="cb232"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb232-1"><a href="#cb232-1" aria-hidden="true" tabindex="-1"></a>people.plot(kind <span class="op">=</span> <span class="st">"line"</span>, x <span class="op">=</span> <span class="st">"body_mass_index"</span>, y <span class="op">=</span> [<span class="st">"height"</span>, <span class="st">"weight"</span>])</span>
 <span id="cb232-2"><a href="#cb232-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="pandas_files/figure-html/cell-151-output-1.png" class="img-fluid"></p>
+<p><img src="pandas_files/figure-html/cell-150-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>맷플롯립의 함수가 지원하는 다른 매개변수를 사용할 수 있습니다. 예를 들어, 산점도를 그릴 때 맷플롯립의 <code>scatter()</code> 함수의 <code>s</code> 매개변수를 사용해 크기를 지정할 수 있습니다:</p>
@@ -4138,7 +4138,7 @@ dtype: bool</code></pre>
 <div class="sourceCode cell-code" id="cb233"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb233-1"><a href="#cb233-1" aria-hidden="true" tabindex="-1"></a>people.plot(kind <span class="op">=</span> <span class="st">"scatter"</span>, x <span class="op">=</span> <span class="st">"height"</span>, y <span class="op">=</span> <span class="st">"weight"</span>, s<span class="op">=</span>[<span class="dv">40</span>, <span class="dv">120</span>, <span class="dv">200</span>])</span>
 <span id="cb233-2"><a href="#cb233-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="pandas_files/figure-html/cell-152-output-1.png" class="img-fluid"></p>
+<p><img src="pandas_files/figure-html/cell-151-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>선택할 수 있는 옵션이 많습니다. 판다스 문서의 <a href="http://pandas.pydata.org/pandas-docs/stable/visualization.html">시각화</a> 페이지에서 마음에 드는 그래프를 찾아 예제 코드를 살펴 보세요.</p>
@@ -4162,7 +4162,7 @@ dtype: bool</code></pre>
 <pre><code>&lt;Figure size 432x288 with 0 Axes&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="pandas_files/figure-html/cell-153-output-2.png" class="img-fluid"></p>
+<p><img src="pandas_files/figure-html/cell-152-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <div class="cell" data-outputid="b3f0644e-c10f-4deb-e4e5-897074220820">
@@ -4257,14 +4257,14 @@ dtype: bool</code></pre>
 <div class="sourceCode cell-code" id="cb237"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb237-1"><a href="#cb237-1" aria-hidden="true" tabindex="-1"></a>df4.plot(kind<span class="op">=</span><span class="st">"hist"</span>,alpha<span class="op">=</span><span class="fl">0.5</span>, x<span class="op">=</span><span class="st">"a"</span>)</span>
 <span id="cb237-2"><a href="#cb237-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="pandas_files/figure-html/cell-155-output-1.png" class="img-fluid"></p>
+<p><img src="pandas_files/figure-html/cell-154-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <div class="cell" data-outputid="566c5c2c-4fe0-493e-f288-c1c6c729b731">
 <div class="sourceCode cell-code" id="cb238"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb238-1"><a href="#cb238-1" aria-hidden="true" tabindex="-1"></a>df4[<span class="st">'a'</span>].plot.hist()</span>
 <span id="cb238-2"><a href="#cb238-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="pandas_files/figure-html/cell-156-output-1.png" class="img-fluid"></p>
+<p><img src="pandas_files/figure-html/cell-155-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <ul>
@@ -4378,7 +4378,7 @@ dtype: bool</code></pre>
 <span id="cb240-2"><a href="#cb240-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb240-3"><a href="#cb240-3" aria-hidden="true" tabindex="-1"></a>df.plot.box()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="pandas_files/figure-html/cell-158-output-1.png" class="img-fluid"></p>
+<p><img src="pandas_files/figure-html/cell-157-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <div class="cell" data-outputid="9c3b0e68-995a-4d57-c8f4-913b4b8fd3b2">
@@ -4474,7 +4474,7 @@ dtype: bool</code></pre>
 <pre><code>&lt;Figure size 432x288 with 0 Axes&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="pandas_files/figure-html/cell-160-output-2.png" class="img-fluid"></p>
+<p><img src="pandas_files/figure-html/cell-159-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 </section>

@@ -23,7 +23,6 @@ website:
     contents:
       - section: "Basics"
         contents:
-          - basic post.qmd
           - 공간정보.qmd
       - section: "데이터 마이닝"
         contents :

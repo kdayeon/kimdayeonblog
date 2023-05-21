@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="kim dayeon">
-<meta name="dcterms.date" content="2023-05-20">
+<meta name="dcterms.date" content="2023-05-21">
 
 <title>dayeon blog - For loop 속도 개선하기</title>
 <style>
@@ -263,7 +263,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 20, 2023</p>
+      <p class="date">May 21, 2023</p>
     </div>
   </div>
   
@@ -293,9 +293,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>(1631, 11)</code></pre>
 </div>
 </div>
-<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-outputid="9f437811-f98a-424a-ca4d-11bc3b6690ff" data-scrolled="true" data-execution_count="95">
+<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-outputid="9f437811-f98a-424a-ca4d-11bc3b6690ff" data-scrolled="true" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="95">
+<div class="cell-output cell-output-display" data-execution_count="4">
 
 <div>
 
@@ -392,9 +392,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<div class="cell" data-outputid="213d2165-bbaf-4e5c-ecf7-565088a0788a" data-execution_count="96">
+<div class="cell" data-outputid="213d2165-bbaf-4e5c-ecf7-565088a0788a" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="96">
+<div class="cell-output cell-output-display" data-execution_count="5">
 
 <div>
 
@@ -493,7 +493,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="haversine-definition" class="level2">
 <h2 class="anchored" data-anchor-id="haversine-definition">Haversine definition</h2>
 <p>두 위치 사이의 거리를 계산하는 함수 - https://stricky.tistory.com/284</p>
-<div class="cell" data-editable="true" data-execution_count="97">
+<div class="cell" data-editable="true" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> haversine(lat1, lon1, lat2, lon2):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    miles_constant <span class="op">=</span> <span class="dv">3959</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    lat1, lon1, lat2, lon2 <span class="op">=</span> <span class="bu">map</span>(np.deg2rad, [lat1, lon1, lat2, lon2])</span>
@@ -511,7 +511,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="looping-haversine" class="level2">
 <h2 class="anchored" data-anchor-id="looping-haversine">Looping Haversine</h2>
-<div class="cell" data-execution_count="98">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> haversine_looping(df):</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    distance_list <span class="op">=</span> [] <span class="co"># 빈 리스트를 생성</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(df)):   <span class="co">#dataframe에서 값을 하나씩 뽑아서 </span></span>
@@ -521,18 +521,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>%%timeit은 Jupyter Notebook에서 사용되는 매직 명령어 중 하나로, 코드 실행 시간을 측정하는 도구입니다.</p>
 <p>%%timeit 매직 명령어를 사용하면 해당 셀의 코드를 여러 번 실행하여 실행 시간을 평균적으로 계산합니다. 이를 통해 코드의 실행 성능을 쉽게 측정하고 비교할 수 있습니다.</p>
-<div class="cell" data-outputid="93d69c41-6f76-4bc4-a2a5-db309e7b6e20" data-execution_count="103">
+<div class="cell" data-outputid="93d69c41-6f76-4bc4-a2a5-db309e7b6e20" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>timeit</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Haversine 반복 함수 실행하기</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'distance'</span>] <span class="op">=</span> haversine_looping(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1.38 s ± 425 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
+<pre><code>446 ms ± 121 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
 </div>
 </div>
-<div class="cell" data-outputid="52934dbd-3268-4afc-b637-3c4e37dd1c6b" data-execution_count="104">
+<div class="cell" data-outputid="52934dbd-3268-4afc-b637-3c4e37dd1c6b" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'distance'</span>].describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="104">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>count    1631.000000
 mean      111.318922
 std       107.476086
@@ -548,7 +548,7 @@ Name: distance, dtype: float64</code></pre>
 <section id="iterrows-haversine" class="level2">
 <h2 class="anchored" data-anchor-id="iterrows-haversine">Iterrows Haversine</h2>
 <p>반복문을 돌려야 할 때 iterrows() 메서드를 사용하는 건 행을 반복하기 위한 더 좋은 방법이다. iterrows()는 데이터 프레임의 행을 반복하며 행 자체를 포함하는 객체에 덧붙여 각 행의 색인을 반환하는 제너레이터다. iterrows()는 판다스 데이터 프레임과 함께 작동하게끔 최적화되어 있으며 표준 함수 대부분을 실행하는 데 가장 효율적인 방법은 아니지만(나중에 자세히 설명) 단순 반복보다는 상당히 개선되었다. 예제의 경우 iterrows()는 행을 수동으로 반복하는 것보다 거의 똑같은 문제를 약 4배 빠르게 해결한다.</p>
-<div class="cell" data-outputid="cae93271-3c2a-440c-d1cd-cae2bd3c049d" data-execution_count="36">
+<div class="cell" data-outputid="cae93271-3c2a-440c-d1cd-cae2bd3c049d" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Haversine applied on rows via iteration  #그냥 반복 보다는 빠르다 </span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>haversine_series <span class="op">=</span> []</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> index, row <span class="kw">in</span> df.iloc[<span class="dv">0</span>:<span class="dv">10</span>].iterrows():  <span class="co">#iterrows:index랑 row랑 같이 뽑아줌  #row는 데이터의 행이 하나씩 뽑아짐</span></span>
@@ -566,7 +566,7 @@ Name: distance, dtype: float64</code></pre>
 42.67807</code></pre>
 </div>
 </div>
-<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-outputid="9added02-742b-47c3-8780-5eb2bf75a9d2" data-execution_count="37">
+<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-outputid="9added02-742b-47c3-8780-5eb2bf75a9d2" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>timeit</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Haversine applied on rows via iteration</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>haversine_series <span class="op">=</span> []</span>
@@ -574,12 +574,12 @@ Name: distance, dtype: float64</code></pre>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    haversine_series.append(haversine(<span class="fl">40.671</span>, <span class="op">-</span><span class="fl">73.985</span>, row[<span class="st">'latitude'</span>], row[<span class="st">'longitude'</span>]))</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'distance'</span>] <span class="op">=</span> haversine_series</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>153 ms ± 28.2 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
+<pre><code>224 ms ± 40.4 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
 </div>
 </div>
 <p>itertuples와 iterrows는 모두 Pandas 데이터프레임의 행을 순회(iterate)하는 메서드입니다. 그러나 itertuples는 iterrows보다 더욱 빠른 속도를 보이므로, 대체로 itertuples를 사용하는 것이 좋습니다.</p>
 <p>이유는 iterrows는 각 행(row)을 Series 객체로 반환하는 반면, itertuples는 각 행을 NamedTuple로 반환합니다. NamedTuple은 각 속성(attribute)에 이름이 지정되어 있기 때문에, Series보다 빠르게 데이터에 접근할 수 있습니다. 따라서 대용량의 데이터프레임을 다룰 때는 itertuples를 사용하는 것이 더욱 효율적입니다.</p>
-<div class="cell" data-outputid="839609e5-eb8a-4334-b10f-a120f5b098a4" data-execution_count="38">
+<div class="cell" data-outputid="839609e5-eb8a-4334-b10f-a120f5b098a4" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>timeit</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>haversine_series <span class="op">=</span> []</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, lat, lon <span class="kw">in</span> df[[<span class="st">'latitude'</span>,<span class="st">'longitude'</span>]].itertuples():  <span class="co">#itertples가 일반 루프문 보다는 상당히 빠르다</span></span>
@@ -587,52 +587,23 @@ Name: distance, dtype: float64</code></pre>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'distance'</span>] <span class="op">=</span> haversine_series</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>39.6 ms ± 3.54 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)</code></pre>
+<pre><code>27.5 ms ± 6.51 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="29">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="29">
-
-<div>
-
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>A</th>
-      <th>B</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>a</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2</td>
-      <td>b</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>c</td>
-    </tr>
-  </tbody>
-</table>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'df2' is not defined</code></pre>
 </div>
 </div>
-</div>
-<div class="cell" data-outputid="8a1f1b1e-c014-4107-ad60-9338277edb73" data-execution_count="39">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#예제   # 한 행씩 뽑는것</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.DataFrame({<span class="st">'A'</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], <span class="st">'B'</span>: [<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>]})</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row <span class="kw">in</span> df2.itertuples():</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(row)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-outputid="8a1f1b1e-c014-4107-ad60-9338277edb73">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#예제   # 한 행씩 뽑는것</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.DataFrame({<span class="st">'A'</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], <span class="st">'B'</span>: [<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>]})</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row <span class="kw">in</span> df2.itertuples():</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(row)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Pandas(Index=0, A=1, B='a')
 Pandas(Index=1, A=2, B='b')
@@ -646,12 +617,12 @@ Pandas(Index=2, A=3, B='c')</code></pre>
 <p>익명의 람다 함수를 사용하여 Haversine 함수를 각 행에 적용하며 각 행의 특정 셀을 함수 입력값으로 지정할 수 있다. 람다 함수는 판다스가 행(축 = 1)과 열(축 = 0) 중 어디에 함수를 적용할지 정할 수 있게 축 매개 변수를 마지막에 포함한다.</p>
 <section id="timing-apply" class="level3">
 <h3 class="anchored" data-anchor-id="timing-apply">Timing “apply”</h3>
-<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-outputid="83829ee4-2e7f-4ff2-b0ed-fb0fcd88d479" data-scrolled="true" data-execution_count="59">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>timeit </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'distance'</span>] <span class="op">=\</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">apply</span>(<span class="kw">lambda</span> row: haversine(<span class="fl">40.671</span>, <span class="op">-</span><span class="fl">73.985</span>, <span class="op">\</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    row[<span class="st">'latitude'</span>], row[<span class="st">'longitude'</span>]), axis<span class="op">=</span><span class="dv">1</span>)   <span class="co">#apply: 사용하면 각각의 행이 실행  \: 줄바꿈이라 무시# axis: 축 0번째는 열 기준 1은 행기준</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-outputid="83829ee4-2e7f-4ff2-b0ed-fb0fcd88d479" data-scrolled="true">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>timeit </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'distance'</span>] <span class="op">=\</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">apply</span>(<span class="kw">lambda</span> row: haversine(<span class="fl">40.671</span>, <span class="op">-</span><span class="fl">73.985</span>, <span class="op">\</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    row[<span class="st">'latitude'</span>], row[<span class="st">'longitude'</span>]), axis<span class="op">=</span><span class="dv">1</span>)   <span class="co">#apply: 사용하면 각각의 행이 실행  \: 줄바꿈이라 무시# axis: 축 0번째는 열 기준 1은 행기준</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>119 ms ± 24.3 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)</code></pre>
 </div>
@@ -666,17 +637,17 @@ Pandas(Index=2, A=3, B='c')</code></pre>
 <p>판다스는 수학 연산에서 집계 및 문자열 함수(사용 가능한 함수의 광범위한 목록은 판다스 문서에서 확인해라)에 이르기까지 다양한 벡터화 함수를 포함하고 있다. 내장 함수는 판다스 시리즈와 데이터 프레임에서 작동하게끔 최적화되어있다. 결과적으로 벡터화 판다스 함수를 사용하는 건 비슷한 목적을 위해 손수 반복시키는 방법보다 거의 항상 바람직하다.</p>
 <p>지금까지는 Haversine 함수에 스칼라를 전달했다. 그러나 Haversine 함수 내에서 사용하는 모든 함수를 배열 위로 작동시킬 수 있다. 이렇게 하면 거리 함수를 매우 간단하게 벡터화할 수 있다. 스칼라 값으로 각 위도, 경도를 전달하는 대신 전체 시리즈(열)를 전달한다. 이를 통해 판다스는 벡터화 함수에 적용 가능한 모든 최적화 옵션을 활용할 수 있고 특히 전체 배열에 대한 모든 계산을 동시에 수행하게 된다.</p>
 <div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-outputid="f3b4e9a7-3db3-42de-c1ca-b5940db105b5" data-execution_count="44">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>timeit</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Vectorized implementation of Haversine applied on Pandas series</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'distance'</span>] <span class="op">=</span> haversine(<span class="fl">40.671</span>, <span class="op">-</span><span class="fl">73.985</span>,<span class="op">\</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                                   df[<span class="st">'latitude'</span>], df[<span class="st">'longitude'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>timeit</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Vectorized implementation of Haversine applied on Pandas series</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'distance'</span>] <span class="op">=</span> haversine(<span class="fl">40.671</span>, <span class="op">-</span><span class="fl">73.985</span>,<span class="op">\</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                                   df[<span class="st">'latitude'</span>], df[<span class="st">'longitude'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>2.77 ms ± 556 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="45">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>haversine(<span class="fl">40.671</span>, <span class="op">-</span><span class="fl">73.985</span>,<span class="op">\</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>           df[<span class="st">'latitude'</span>], df[<span class="st">'longitude'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>haversine(<span class="fl">40.671</span>, <span class="op">-</span><span class="fl">73.985</span>,<span class="op">\</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>           df[<span class="st">'latitude'</span>], df[<span class="st">'longitude'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="45">
 <pre><code>0       139.607190
 1       139.746898
@@ -704,18 +675,18 @@ Length: 1631, dtype: float64</code></pre>
 <section id="timing-vectorized-implementation-1" class="level4">
 <h4 class="anchored" data-anchor-id="timing-vectorized-implementation-1">Timing vectorized implementation</h4>
 <div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-outputid="b17e3f9b-3cc5-4e14-9802-54d766ba8fc5" data-execution_count="47">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vectorized implementation of Haversine applied on NumPy arrays</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit df[<span class="st">'distance'</span>] <span class="op">=</span> haversine(<span class="fl">40.671</span>, <span class="op">-</span><span class="fl">73.985</span>,<span class="op">\</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                         df[<span class="st">'latitude'</span>].values, df[<span class="st">'longitude'</span>].values)  <span class="co">#판다스를 넘파이로 바꿔 계산 하면 조금 더 빠름</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vectorized implementation of Haversine applied on NumPy arrays</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit df[<span class="st">'distance'</span>] <span class="op">=</span> haversine(<span class="fl">40.671</span>, <span class="op">-</span><span class="fl">73.985</span>,<span class="op">\</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                         df[<span class="st">'latitude'</span>].values, df[<span class="st">'longitude'</span>].values)  <span class="co">#판다스를 넘파이로 바꿔 계산 하면 조금 더 빠름</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>276 µs ± 35.6 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)</code></pre>
 </div>
 </div>
 <div class="cell" data-editable="true" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-outputid="c846c988-0bf2-45bd-d6c9-1882ef1c3fb8" data-execution_count="48">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>timeit</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert pandas arrays to NumPy ndarrays</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>np_lat <span class="op">=</span> df[<span class="st">'latitude'</span>].values</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>np_lon <span class="op">=</span> df[<span class="st">'longitude'</span>].values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>timeit</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert pandas arrays to NumPy ndarrays</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>np_lat <span class="op">=</span> df[<span class="st">'latitude'</span>].values</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>np_lon <span class="op">=</span> df[<span class="st">'longitude'</span>].values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>12.9 µs ± 2.5 µs per loop (mean ± std. dev. of 7 runs, 100000 loops each)</code></pre>
 </div>
@@ -739,7 +710,7 @@ Length: 1631, dtype: float64</code></pre>
 </ol>
 <p>해당 조건을 만족하는 호텔들을 출력해봅시다</p>
 <div class="cell" data-execution_count="80">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="80">
 <pre><code>0       True
 1       True
@@ -756,7 +727,7 @@ Name: distance, Length: 1631, dtype: bool</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="79">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="79">
 <pre><code>count     1631
 unique       1
@@ -766,22 +737,22 @@ Name: distance, dtype: object</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="106">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> haversine_looping(df):</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    distance_list <span class="op">=</span> [] <span class="co"># 빈 리스트를 생성</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(df)):   <span class="co">#dataframe에서 값을 하나씩 뽑아서 </span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> haversine(<span class="fl">40.671</span>, <span class="op">-</span><span class="fl">73.985</span>, df.iloc[i][<span class="st">'latitude'</span>], df.iloc[i][<span class="st">'longitude'</span>])</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>        distance_list.append(d)</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> distance_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> haversine_looping(df):</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    distance_list <span class="op">=</span> [] <span class="co"># 빈 리스트를 생성</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(df)):   <span class="co">#dataframe에서 값을 하나씩 뽑아서 </span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> haversine(<span class="fl">40.671</span>, <span class="op">-</span><span class="fl">73.985</span>, df.iloc[i][<span class="st">'latitude'</span>], df.iloc[i][<span class="st">'longitude'</span>])</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        distance_list.append(d)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> distance_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="107">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'distance'</span>] <span class="op">=</span> haversine_looping(df) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'distance'</span>] <span class="op">=</span> haversine_looping(df) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="148">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df[(df[<span class="st">'distance'</span>] <span class="op">&lt;</span> <span class="dv">200</span>) <span class="op">&amp;</span> (df[<span class="st">'star_rating'</span>] <span class="op">&gt;=</span> <span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df[(df[<span class="st">'distance'</span>] <span class="op">&lt;</span> <span class="dv">200</span>) <span class="op">&amp;</span> (df[<span class="st">'star_rating'</span>] <span class="op">&gt;=</span> <span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="151">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df[(df[<span class="st">'distance'</span>] <span class="op">&lt;</span> <span class="dv">200</span>) <span class="op">&amp;</span> (df[<span class="st">'star_rating'</span>] <span class="op">&gt;=</span> <span class="dv">4</span>)][[<span class="st">'name'</span>,<span class="st">"address1"</span>]]</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df[(df[<span class="st">'distance'</span>] <span class="op">&lt;</span> <span class="dv">200</span>) <span class="op">&amp;</span> (df[<span class="st">'star_rating'</span>] <span class="op">&gt;=</span> <span class="dv">4</span>)][[<span class="st">'name'</span>,<span class="st">"address1"</span>]]</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="151">
 
 <div>
@@ -857,7 +828,7 @@ Name: distance, dtype: object</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="156">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(df[(df[<span class="st">'distance'</span>] <span class="op">&lt;</span> <span class="dv">200</span>) <span class="op">&amp;</span> (df[<span class="st">'star_rating'</span>] <span class="op">&gt;=</span> <span class="dv">4</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(df[(df[<span class="st">'distance'</span>] <span class="op">&lt;</span> <span class="dv">200</span>) <span class="op">&amp;</span> (df[<span class="st">'star_rating'</span>] <span class="op">&gt;=</span> <span class="dv">4</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="156">
 <pre><code>245</code></pre>
 </div>

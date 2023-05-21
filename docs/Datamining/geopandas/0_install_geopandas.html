@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="kim dayeon">
-<meta name="dcterms.date" content="2023-05-20">
+<meta name="dcterms.date" content="2023-05-21">
 
 <title>dayeon blog - geopandas 설치법</title>
 <style>
@@ -260,7 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 20, 2023</p>
+      <p class="date">May 21, 2023</p>
     </div>
   </div>
   
@@ -307,45 +307,9 @@ VSCode로 진행하시는 분은 VSCode 실행을 관리자권한으로 해야 �
 저는 강의자료가 있는 곳에 geopandas를 폴더를 만들고 이 폴더 안에 설치 파일들을 옮겨놓음</p>
 <p>아래의 설치/업데이트 구문을 한줄씩 실행합니다.<br>
 먼저, pip와 numpy를 업그레이드 합니다.</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>python <span class="op">-</span>m pip install <span class="op">--</span> upgrade pip</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">--</span> upgrade numpy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ERROR: Could not find a version that satisfies the requirement upgrade (from versions: none)
-ERROR: No matching distribution found for upgrade
-ERROR: Could not find a version that satisfies the requirement upgrade (from versions: none)
-ERROR: No matching distribution found for upgrade</code></pre>
-</div>
-</div>
+<p>!python -m pip install – upgrade pip !pip install – upgrade numpy</p>
 <p>그 다음 아래 패키지를 순차적으로 설치합니다</p>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install pyproj </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install geopandas<span class="op">/</span>Shapely<span class="op">-</span><span class="fl">1.8.2</span><span class="op">-</span>cp38<span class="op">-</span>cp38<span class="op">-</span>win_amd64.whl</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install geopandas<span class="op">/</span>GDAL<span class="op">-</span><span class="fl">3.4.3</span><span class="op">-</span>cp38<span class="op">-</span>cp38<span class="op">-</span>win_amd64.whl</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install geopandas<span class="op">/</span>Fiona<span class="op">-</span><span class="fl">1.8.21</span><span class="op">-</span>cp38<span class="op">-</span>cp38<span class="op">-</span>win_amd64.whl</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install geopandas<span class="op">/</span>geopandas<span class="op">-</span><span class="fl">0.10.2</span><span class="op">-</span>py2.py3<span class="op">-</span>none<span class="op">-</span><span class="bu">any</span>.whl</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Requirement already satisfied: pyproj in c:\users\jiyeo\.anaconda\anaconda3\lib\site-packages (3.5.0)
-Requirement already satisfied: certifi in c:\users\jiyeo\.anaconda\anaconda3\lib\site-packages (from pyproj) (2022.9.14)</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>WARNING: Requirement 'geopandas/Shapely-1.8.2-cp38-cp38-win_amd64.whl' looks like a filename, but the file does not exist
-ERROR: Shapely-1.8.2-cp38-cp38-win_amd64.whl is not a supported wheel on this platform.
-WARNING: Requirement 'geopandas/GDAL-3.4.3-cp38-cp38-win_amd64.whl' looks like a filename, but the file does not exist
-ERROR: GDAL-3.4.3-cp38-cp38-win_amd64.whl is not a supported wheel on this platform.
-WARNING: Requirement 'geopandas/Fiona-1.8.21-cp38-cp38-win_amd64.whl' looks like a filename, but the file does not exist
-ERROR: Fiona-1.8.21-cp38-cp38-win_amd64.whl is not a supported wheel on this platform.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Processing c:\users\jiyeo\downloads\geopandas\geopandas-0.10.2-py2.py3-none-any.whl</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>WARNING: Requirement 'geopandas/geopandas-0.10.2-py2.py3-none-any.whl' looks like a filename, but the file does not exist
-ERROR: Could not install packages due to an OSError: [Errno 2] No such file or directory: 'C:\\Users\\jiyeo\\Downloads\\geopandas\\geopandas-0.10.2-py2.py3-none-any.whl'
-</code></pre>
-</div>
-</div>
+<p>!pip install pyproj !pip install geopandas/Shapely-1.8.2-cp38-cp38-win_amd64.whl !pip install geopandas/GDAL-3.4.3-cp38-cp38-win_amd64.whl !pip install geopandas/Fiona-1.8.21-cp38-cp38-win_amd64.whl !pip install geopandas/geopandas-0.10.2-py2.py3-none-any.whl</p>
 </section>
 <section id="설치-맥북" class="level2">
 <h2 class="anchored" data-anchor-id="설치-맥북">설치 (맥북)</h2>
@@ -353,8 +317,8 @@ ERROR: Could not install packages due to an OSError: [Errno 2] No such file or d
 !pip install geopy
 !pip install geopandas</code></pre>
 <p>실행이 잘 되는지 확인</p>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
