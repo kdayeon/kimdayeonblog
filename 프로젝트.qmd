@@ -1,0 +1,12 @@
+---
+title: "프로젝트"
+listing: 
+  contents: 프로젝트
+  sort: "data desc"
+  type: default
+  categories: true
+  sort-ui: true
+  filter-ui: true
+page-layout: full
+title-block-banner: true
+---
