@@ -24,7 +24,7 @@ website:
       - section: "University"
         contents:
           - 공간정보.qmd
-          - 프로직트.qmd
+          - 프로젝트.qmd
       - section: "데이터 마이닝"
         contents :
            - Exercise.qmd
