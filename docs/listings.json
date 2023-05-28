@@ -34,8 +34,9 @@
       "/Data/1. Your First Map.html",
       "/Data/2. Coordinate Reference System.html",
       "/Data/3. Interactive Maps.html",
-      "/Data/4. pydeck-example.html",
-      "/Data/5.Proximity Analysis.html"
+      "/Data/4. Manipulating Geospatial Data.html",
+      "/Data/5.Proximity Analysis.html",
+      "/Data/pydeck-example.html"
     ]
   },
   {

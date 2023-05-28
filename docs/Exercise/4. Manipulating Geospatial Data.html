@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="kim dayeon">
-<meta name="dcterms.date" content="2023-05-21">
+<meta name="dcterms.date" content="2023-05-29">
 
 <title>dayeon blog - 4. Manipulating Geospatial Data</title>
 <style>
@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -60,6 +123,9 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -131,9 +197,6 @@ ul.task-list li input[type="checkbox"] {
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
-  basic post.qmd
-  </li>
-          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../공간정보.html" class="sidebar-item-text sidebar-link">공간정보</a>
   </div>
@@ -197,7 +260,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 21, 2023</p>
+      <p class="date">May 29, 2023</p>
     </div>
   </div>
   
@@ -207,8 +270,1298 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>You are a Starbucks big data analyst (<a href="https://www.forbes.com/sites/bernardmarr/2018/05/28/starbucks-using-big-data-analytics-and-artificial-intelligence-to-boost-performance/#130c7d765cdc">that’s a real job!</a>) looking to find the next store into a <a href="https://www.businessinsider.com/starbucks-reserve-roastery-compared-regular-starbucks-2018-12#also-on-the-first-floor-was-the-main-coffee-bar-five-hourglass-like-units-hold-the-freshly-roasted-coffee-beans-that-are-used-in-each-order-the-selection-rotates-seasonally-5">Starbucks Reserve Roastery</a>. These roasteries are much larger than a typical Starbucks store and have several additional features, including various food and wine options, along with upscale lounge areas. You’ll investigate the demographics of various counties in the state of California, to determine potentially suitable locations.</p>
+<center>
+<img src="https://storage.googleapis.com/kaggle-media/learn/images/BIyE6kR.png" width="450"><br><br>
+</center>
+<p>Before you get started, run the code cell below to set everything up.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> geopy.geocoders <span class="im">import</span> Nominatim            <span class="co"># What you'd normally run</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#from learntools.geospatial.tools import Nominatim # Just for this exercise</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> folium <span class="im">import</span> Marker</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> folium.plugins <span class="im">import</span> MarkerCluster</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#from learntools.core import binder</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#binder.bind(globals())</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#from learntools.geospatial.ex4 import *</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> embed_map(m, file_name):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> IPython.display <span class="im">import</span> IFrame</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    m.save(file_name)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> IFrame(file_name, width<span class="op">=</span><span class="st">'100%'</span>, height<span class="op">=</span><span class="st">'500px'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exercises" class="level1">
+<h1>Exercises</h1>
+<section id="geocode-the-missing-locations." class="level3">
+<h3 class="anchored" data-anchor-id="geocode-the-missing-locations.">1) Geocode the missing locations.</h3>
+<p>Run the next code cell to create a DataFrame <code>starbucks</code> containing Starbucks locations in the state of California.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load and preview Starbucks locations in California</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>starbucks <span class="op">=</span> pd.read_csv(<span class="st">"D:/archive (1)/starbucks_locations.csv"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>starbucks.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Store Number</th>
+      <th>Store Name</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>Longitude</th>
+      <th>Latitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10429-100710</td>
+      <td>Palmdale &amp; Hwy 395</td>
+      <td>14136 US Hwy 395 Adelanto CA</td>
+      <td>Adelanto</td>
+      <td>-117.40</td>
+      <td>34.51</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>635-352</td>
+      <td>Kanan &amp; Thousand Oaks</td>
+      <td>5827 Kanan Road Agoura CA</td>
+      <td>Agoura</td>
+      <td>-118.76</td>
+      <td>34.16</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>74510-27669</td>
+      <td>Vons-Agoura Hills #2001</td>
+      <td>5671 Kanan Rd. Agoura Hills CA</td>
+      <td>Agoura Hills</td>
+      <td>-118.76</td>
+      <td>34.15</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>29839-255026</td>
+      <td>Target Anaheim T-0677</td>
+      <td>8148 E SANTA ANA CANYON ROAD AHAHEIM CA</td>
+      <td>AHAHEIM</td>
+      <td>-117.75</td>
+      <td>33.87</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>23463-230284</td>
+      <td>Safeway - Alameda 3281</td>
+      <td>2600 5th Street Alameda CA</td>
+      <td>Alameda</td>
+      <td>-122.28</td>
+      <td>37.79</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<ul>
+<li>대부분의 상점에는 알려진 위치(위도, 경도)가 있습니다. 그러나 Berkeley 시의 모든 위치가 누락되었습니다.</li>
+</ul>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many rows in each column have missing values?</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(starbucks.isnull().<span class="bu">sum</span>())</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View rows with missing locations</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>rows_with_missing <span class="op">=</span> starbucks[starbucks[<span class="st">"City"</span>]<span class="op">==</span><span class="st">"Berkeley"</span>]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>rows_with_missing</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Store Number    0
+Store Name      0
+Address         0
+City            0
+Longitude       5
+Latitude        5
+dtype: int64</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Store Number</th>
+      <th>Store Name</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>Longitude</th>
+      <th>Latitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>153</th>
+      <td>5406-945</td>
+      <td>2224 Shattuck - Berkeley</td>
+      <td>2224 Shattuck Avenue Berkeley CA</td>
+      <td>Berkeley</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>570-512</td>
+      <td>Solano Ave</td>
+      <td>1799 Solano Avenue Berkeley CA</td>
+      <td>Berkeley</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>155</th>
+      <td>17877-164526</td>
+      <td>Safeway - Berkeley #691</td>
+      <td>1444 Shattuck Place Berkeley CA</td>
+      <td>Berkeley</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>156</th>
+      <td>19864-202264</td>
+      <td>Telegraph &amp; Ashby</td>
+      <td>3001 Telegraph Avenue Berkeley CA</td>
+      <td>Berkeley</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>157</th>
+      <td>9217-9253</td>
+      <td>2128 Oxford St.</td>
+      <td>2128 Oxford Street Berkeley CA</td>
+      <td>Berkeley</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>튜토리얼에서 우리는 (geopy.geocoders의) Nominatim()을 사용하여 값을 지오코딩했으며 이는 이 과정 외부에서 자신의 프로젝트에서 사용할 수 있는 것입니다.</p>
+<p>이 연습에서는 약간 다른 함수 Nominatim()(learntools.geospatial.tools에서)을 사용합니다. 이 기능은 노트북 상단에서 가져온 기능으로 GeoPandas의 기능과 동일하게 작동합니다.</p>
+<p>*즉, 다음과 같은 경우:</p>
+<p>노트북 상단의 import 문을 변경하지 않고 아래 코드 셀에서 지오코딩 함수를 geocode()로 호출합니다.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the geocoder</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>geolocator <span class="op">=</span> Nominatim(user_agent<span class="op">=</span><span class="st">"kaggle_learn"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_geocoder(row):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    point <span class="op">=</span> geolocator.geocode(row).point</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.Series({<span class="st">'Latitude'</span>: point.latitude, <span class="st">'Longitude'</span>: point.longitude})</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>berkeley <span class="op">=</span> rows_with_missing.<span class="bu">apply</span>(<span class="kw">lambda</span> x: my_geocoder(x[<span class="st">'Address'</span>]), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>starbucks.update(berkeley)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="view-berkeley-locations." class="level1">
+<h1>2) View Berkeley locations.</h1>
+<p>OpenStreetMap 스타일로 Berkeley의 (위도, 경도) 위치를 시각화합니다.</p>
+<div class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a base map</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>m_2<span class="op">=</span> folium.Map(location<span class="op">=</span>[<span class="fl">37.88</span>,<span class="op">-</span><span class="fl">122.26</span>], tiles<span class="op">=</span><span class="st">'openstreetmap'</span>,zoom_start<span class="op">=</span><span class="dv">13</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> starbucks[starbucks[<span class="st">"City"</span>]<span class="op">==</span><span class="st">'Berkeley'</span>].iterrows():</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    Marker([row[<span class="st">'Latitude'</span>], row[<span class="st">'Longitude'</span>]]).add_to(m_2)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>m_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="50">
+<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -&gt; Trust Notebook</span><iframe srcdoc="<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;></script>
+    <script src=&quot;https://code.jquery.com/jquery-1.12.4.min.js&quot;></script>
+    <script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;></script>
+    <script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;></script>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/>
+    
+            <meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; />
+            <style>
+                #map_cbdd53f1feed1aba0461f310aeb3d778 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class=&quot;folium-map&quot; id=&quot;map_cbdd53f1feed1aba0461f310aeb3d778&quot; ></div>
+        
+</body>
+<script>
+    
+    
+            var map_cbdd53f1feed1aba0461f310aeb3d778 = L.map(
+                &quot;map_cbdd53f1feed1aba0461f310aeb3d778&quot;,
+                {
+                    center: [37.88, -122.26],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 13,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_968c939f3bb223aee080fa2a74065b2f = L.tileLayer(
+                &quot;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
+                {&quot;attribution&quot;: &quot;Data by \u0026copy; \u003ca target=\&quot;_blank\&quot; href=\&quot;http://openstreetmap.org\&quot;\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\&quot;_blank\&quot; href=\&quot;http://www.openstreetmap.org/copyright\&quot;\u003eODbL\u003c/a\u003e.&quot;, &quot;detectRetina&quot;: false, &quot;maxNativeZoom&quot;: 18, &quot;maxZoom&quot;: 18, &quot;minZoom&quot;: 0, &quot;noWrap&quot;: false, &quot;opacity&quot;: 1, &quot;subdomains&quot;: &quot;abc&quot;, &quot;tms&quot;: false}
+            ).addTo(map_cbdd53f1feed1aba0461f310aeb3d778);
+        
+    
+            var marker_36ed81d28d104c32150d7c8100e40739 = L.marker(
+                [37.8688395, -122.26823],
+                {}
+            ).addTo(map_cbdd53f1feed1aba0461f310aeb3d778);
+        
+    
+            var marker_76d2aa125dceab7b19e9b331caa87d10 = L.marker(
+                [37.891477, -122.2800136],
+                {}
+            ).addTo(map_cbdd53f1feed1aba0461f310aeb3d778);
+        
+    
+            var marker_45a562c1811d0933f2f5d736282f1bd4 = L.marker(
+                [37.88117704104281, -122.26986861045268],
+                {}
+            ).addTo(map_cbdd53f1feed1aba0461f310aeb3d778);
+        
+    
+            var marker_ab5391a1878d6f6afd17ecb9a00c88a0 = L.marker(
+                [37.8557986, -122.2595257],
+                {}
+            ).addTo(map_cbdd53f1feed1aba0461f310aeb3d778);
+        
+    
+            var marker_b934a123d0ef45bb8f5dfc48ed0ae4ed = L.marker(
+                [37.870253149999996, -122.26609492936619],
+                {}
+            ).addTo(map_cbdd53f1feed1aba0461f310aeb3d778);
+        
+</script>
+</html>" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""></iframe></div></div>
+</div>
+</div>
+</section>
+<section id="consolidate-your-data." class="level1">
+<h1>3) Consolidate your data.</h1>
+<p>아래 코드를 실행하여 캘리포니아 주의 각 카운티에 대한 이름, 지역(평방 킬로미터) 및 고유 ID(“GEOID” 열에 있음)가 포함된 GeoDataFrame CA_counties를 로드합니다. “도형” 열에는 카운티 경계가 있는 다각형이 포함되어 있습니다.</p>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>CA_counties <span class="op">=</span> gpd.read_file(<span class="st">"D:/archive (1)/CA_county_boundaries/CA_county_boundaries/CA_county_boundaries.shp"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>CA_counties.crs <span class="op">=</span> {<span class="st">'init'</span>: <span class="st">'epsg:4326'</span>}</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>CA_counties.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\jiyeo\anaconda3\envs\dayeon\Lib\site-packages\pyproj\crs\crs.py:141: FutureWarning: '+init=&lt;authority&gt;:&lt;code&gt;' syntax is deprecated. '&lt;authority&gt;:&lt;code&gt;' is the preferred initialization method. When making the change, be mindful of axis order changes: https://pyproj4.github.io/pyproj/stable/gotchas.html#axis-order-changes-in-proj-6
+  in_crs_string = _prepare_from_proj_string(in_crs_string)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>GEOID</th>
+      <th>name</th>
+      <th>area_sqkm</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6091</td>
+      <td>Sierra County</td>
+      <td>2491.995494</td>
+      <td>POLYGON ((-120.65560 39.69357, -120.65554 39.6...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6067</td>
+      <td>Sacramento County</td>
+      <td>2575.258262</td>
+      <td>POLYGON ((-121.18858 38.71431, -121.18732 38.7...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6083</td>
+      <td>Santa Barbara County</td>
+      <td>9813.817958</td>
+      <td>MULTIPOLYGON (((-120.58191 34.09856, -120.5822...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>6009</td>
+      <td>Calaveras County</td>
+      <td>2685.626726</td>
+      <td>POLYGON ((-120.63095 38.34111, -120.63058 38.3...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6111</td>
+      <td>Ventura County</td>
+      <td>5719.321379</td>
+      <td>MULTIPOLYGON (((-119.63631 33.27304, -119.6360...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<ul>
+<li>CA_pop에는 각 카운티의 인구 추정치가 포함되어 있습니다.</li>
+<li>CA_high_earners는 연간 소득이 $150,000 이상인 가구 수를 포함합니다.</li>
+<li>CA_median_age에는 각 카운티의 평균 연령이 포함됩니다.</li>
+</ul>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>CA_pop <span class="op">=</span> pd.read_csv(<span class="st">"D:/archive (1)/CA_county_population.csv"</span>, index_col<span class="op">=</span><span class="st">"GEOID"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>CA_high_earners <span class="op">=</span> pd.read_csv(<span class="st">"D:/archive (1)/CA_county_high_earners.csv"</span>, index_col<span class="op">=</span><span class="st">"GEOID"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>CA_median_age <span class="op">=</span> pd.read_csv(<span class="st">"D:/archive (1)/CA_county_median_age.csv"</span>, index_col<span class="op">=</span><span class="st">"GEOID"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>CA_pop, CA_high_earners 및 CA_median_age와 함께 CA_counties GeoDataFrame을 조인하기</li>
+</ul>
+<p>결과 GeoDataFrame CA_stats의 이름을 지정하고 “GEOID”, “name”, “area_sqkm”, “geometry”, “population”, “high_earners” 및 “median_age”의 8개 열이 있는지 확인합니다.</p>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>a<span class="op">=</span>CA_counties.merge(CA_pop, on <span class="op">=</span> <span class="st">"GEOID"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ab <span class="op">=</span> a.merge(CA_high_earners,on <span class="op">=</span> <span class="st">"GEOID"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>CA_stats <span class="op">=</span> ab.merge(CA_median_age,on <span class="op">=</span> <span class="st">"GEOID"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>CA_stats.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>GEOID</th>
+      <th>name</th>
+      <th>area_sqkm</th>
+      <th>geometry</th>
+      <th>population</th>
+      <th>high_earners</th>
+      <th>median_age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6091</td>
+      <td>Sierra County</td>
+      <td>2491.995494</td>
+      <td>POLYGON ((-120.65560 39.69357, -120.65554 39.6...</td>
+      <td>2987</td>
+      <td>111</td>
+      <td>55.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6067</td>
+      <td>Sacramento County</td>
+      <td>2575.258262</td>
+      <td>POLYGON ((-121.18858 38.71431, -121.18732 38.7...</td>
+      <td>1540975</td>
+      <td>65768</td>
+      <td>35.9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6083</td>
+      <td>Santa Barbara County</td>
+      <td>9813.817958</td>
+      <td>MULTIPOLYGON (((-120.58191 34.09856, -120.5822...</td>
+      <td>446527</td>
+      <td>25231</td>
+      <td>33.7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>6009</td>
+      <td>Calaveras County</td>
+      <td>2685.626726</td>
+      <td>POLYGON ((-120.63095 38.34111, -120.63058 38.3...</td>
+      <td>45602</td>
+      <td>2046</td>
+      <td>51.6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6111</td>
+      <td>Ventura County</td>
+      <td>5719.321379</td>
+      <td>MULTIPOLYGON (((-119.63631 33.27304, -119.6360...</td>
+      <td>850967</td>
+      <td>57121</td>
+      <td>37.5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>CA_stats[<span class="st">"density"</span>] <span class="op">=</span> CA_stats[<span class="st">"population"</span>] <span class="op">/</span> CA_stats[<span class="st">"area_sqkm"</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>CA_stats.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>GEOID</th>
+      <th>name</th>
+      <th>area_sqkm</th>
+      <th>geometry</th>
+      <th>population</th>
+      <th>high_earners</th>
+      <th>median_age</th>
+      <th>density</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6091</td>
+      <td>Sierra County</td>
+      <td>2491.995494</td>
+      <td>POLYGON ((-120.65560 39.69357, -120.65554 39.6...</td>
+      <td>2987</td>
+      <td>111</td>
+      <td>55.0</td>
+      <td>1.198638</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6067</td>
+      <td>Sacramento County</td>
+      <td>2575.258262</td>
+      <td>POLYGON ((-121.18858 38.71431, -121.18732 38.7...</td>
+      <td>1540975</td>
+      <td>65768</td>
+      <td>35.9</td>
+      <td>598.376878</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6083</td>
+      <td>Santa Barbara County</td>
+      <td>9813.817958</td>
+      <td>MULTIPOLYGON (((-120.58191 34.09856, -120.5822...</td>
+      <td>446527</td>
+      <td>25231</td>
+      <td>33.7</td>
+      <td>45.499825</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>6009</td>
+      <td>Calaveras County</td>
+      <td>2685.626726</td>
+      <td>POLYGON ((-120.63095 38.34111, -120.63058 38.3...</td>
+      <td>45602</td>
+      <td>2046</td>
+      <td>51.6</td>
+      <td>16.980022</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6111</td>
+      <td>Ventura County</td>
+      <td>5719.321379</td>
+      <td>MULTIPOLYGON (((-119.63631 33.27304, -119.6360...</td>
+      <td>850967</td>
+      <td>57121</td>
+      <td>37.5</td>
+      <td>148.788107</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="which-counties-look-promising" class="level1">
+<h1>4) Which counties look promising?</h1>
+<p>모든 정보를 단일 GeoDataFrame으로 축소하면 특정 기준을 충족하는 카운티를 훨씬 쉽게 선택할 수 있습니다.</p>
+<p>다음 코드 셀을 사용하여 CA_stats GeoDataFrame에서 행(및 모든 열)의 하위 집합을 포함하는 GeoDataFrame sel_counties를 생성합니다. 특히 다음과 같은 카운티를 선택해야 합니다.</p>
+<p>연간 $150,000를 버는 가구가 100,000가구 이상이며, 평균 연령은 38.5세 미만이며, 주민 밀도는 최소 285(평방 킬로미터당)입니다. 또한 선택한 카운티는 다음 기준 중 하나 이상을 충족해야 합니다.</p>
+<p>연간 $150,000를 버는 가구가 500,000가구 이상이며, 평균 연령이 35.5세 미만이거나 주민 밀도는 최소 1400(평방 킬로미터당)입니다.</p>
+<div class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sel_counties<span class="op">=</span> CA_stats[(CA_stats.high_earners <span class="op">&gt;=</span> <span class="dv">100000</span>) <span class="op">&amp;</span> (CA_stats.median_age <span class="op">&lt;</span> <span class="fl">38.5</span>) <span class="op">&amp;</span> (CA_stats.density<span class="op">&gt;</span><span class="dv">285</span>) <span class="op">&amp;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>         (CA_stats.high_earners <span class="op">&gt;=</span> <span class="dv">500000</span>) <span class="op">&amp;</span> (CA_stats.median_age <span class="op">&lt;</span> <span class="fl">35.5</span>) <span class="op">|</span> (CA_stats.density<span class="op">&gt;</span><span class="dv">1400</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="how-many-stores-did-you-identify" class="level1">
+<h1>5) How many stores did you identify?</h1>
+<p>다음 Starbucks Reserve Roastery 위치를 찾을 때 선택한 카운티 내의 모든 매장을 고려하고 싶을 것입니다. 그렇다면 선택한 카운티 내에 몇 개의 매장이 있습니까?</p>
+<p>이 질문에 답할 준비를 하려면 다음 코드 셀을 실행하여 모든 starbucks 위치가 포함된 GeoDataFrame starbucks_gdf를 만듭니다.</p>
+<div class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>starbucks_gdf <span class="op">=</span> gpd.GeoDataFrame(starbucks, geometry<span class="op">=</span>gpd.points_from_xy(starbucks.Longitude, starbucks.Latitude))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>starbucks_gdf.crs <span class="op">=</span> {<span class="st">'init'</span>: <span class="st">'epsg:4326'</span>}</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>starbucks_gdf.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\jiyeo\anaconda3\envs\dayeon\Lib\site-packages\pyproj\crs\crs.py:141: FutureWarning: '+init=&lt;authority&gt;:&lt;code&gt;' syntax is deprecated. '&lt;authority&gt;:&lt;code&gt;' is the preferred initialization method. When making the change, be mindful of axis order changes: https://pyproj4.github.io/pyproj/stable/gotchas.html#axis-order-changes-in-proj-6
+  in_crs_string = _prepare_from_proj_string(in_crs_string)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Store Number</th>
+      <th>Store Name</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>Longitude</th>
+      <th>Latitude</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10429-100710</td>
+      <td>Palmdale &amp; Hwy 395</td>
+      <td>14136 US Hwy 395 Adelanto CA</td>
+      <td>Adelanto</td>
+      <td>-117.40</td>
+      <td>34.51</td>
+      <td>POINT (-117.40000 34.51000)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>635-352</td>
+      <td>Kanan &amp; Thousand Oaks</td>
+      <td>5827 Kanan Road Agoura CA</td>
+      <td>Agoura</td>
+      <td>-118.76</td>
+      <td>34.16</td>
+      <td>POINT (-118.76000 34.16000)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>74510-27669</td>
+      <td>Vons-Agoura Hills #2001</td>
+      <td>5671 Kanan Rd. Agoura Hills CA</td>
+      <td>Agoura Hills</td>
+      <td>-118.76</td>
+      <td>34.15</td>
+      <td>POINT (-118.76000 34.15000)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>29839-255026</td>
+      <td>Target Anaheim T-0677</td>
+      <td>8148 E SANTA ANA CANYON ROAD AHAHEIM CA</td>
+      <td>AHAHEIM</td>
+      <td>-117.75</td>
+      <td>33.87</td>
+      <td>POINT (-117.75000 33.87000)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>23463-230284</td>
+      <td>Safeway - Alameda 3281</td>
+      <td>2600 5th Street Alameda CA</td>
+      <td>Alameda</td>
+      <td>-122.28</td>
+      <td>37.79</td>
+      <td>POINT (-122.28000 37.79000)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>locations<span class="op">=</span> gpd.sjoin(starbucks_gdf, sel_counties)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>num_stores <span class="op">=</span> <span class="bu">len</span>(locations)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>num_stores</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="49">
+<pre><code>87</code></pre>
+</div>
+</div>
+</section>
+<section id="visualize-the-store-locations." class="level1">
+<h1>6) Visualize the store locations.</h1>
+<p>이전 질문에서 식별한 매장의 위치를 ​​표시하는 지도를 만듭니다.</p>
+<div class="cell" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>m_6 <span class="op">=</span> folium.Map(location<span class="op">=</span>[<span class="dv">37</span>,<span class="op">-</span><span class="dv">120</span>], zoom_start<span class="op">=</span><span class="dv">6</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>mc <span class="op">=</span> MarkerCluster()</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>locations_of_interest <span class="op">=</span> gpd.sjoin(starbucks_gdf, sel_counties)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> locations_of_interest.iterrows():</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> math.isnan(row[<span class="st">'Longitude'</span>]) <span class="kw">and</span> <span class="kw">not</span> math.isnan(row[<span class="st">'Latitude'</span>]):</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        mc.add_child(folium.Marker([row[<span class="st">'Latitude'</span>], row[<span class="st">'Longitude'</span>]]))</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>m_6.add_child(mc)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="55">
+<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -&gt; Trust Notebook</span><iframe srcdoc="<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;></script>
+    <script src=&quot;https://code.jquery.com/jquery-1.12.4.min.js&quot;></script>
+    <script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;></script>
+    <script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;></script>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/>
+    
+            <meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; />
+            <style>
+                #map_3825da9f3bddd984c3d95370d7f9ee2c {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js&quot;></script>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css&quot;/>
+</head>
+<body>
+    
+    
+            <div class=&quot;folium-map&quot; id=&quot;map_3825da9f3bddd984c3d95370d7f9ee2c&quot; ></div>
+        
+</body>
+<script>
+    
+    
+            var map_3825da9f3bddd984c3d95370d7f9ee2c = L.map(
+                &quot;map_3825da9f3bddd984c3d95370d7f9ee2c&quot;,
+                {
+                    center: [37.0, -120.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 6,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_b56b7f350ba70466cf9596aad97ec016 = L.tileLayer(
+                &quot;https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
+                {&quot;attribution&quot;: &quot;Data by \u0026copy; \u003ca target=\&quot;_blank\&quot; href=\&quot;http://openstreetmap.org\&quot;\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\&quot;_blank\&quot; href=\&quot;http://www.openstreetmap.org/copyright\&quot;\u003eODbL\u003c/a\u003e.&quot;, &quot;detectRetina&quot;: false, &quot;maxNativeZoom&quot;: 18, &quot;maxZoom&quot;: 18, &quot;minZoom&quot;: 0, &quot;noWrap&quot;: false, &quot;opacity&quot;: 1, &quot;subdomains&quot;: &quot;abc&quot;, &quot;tms&quot;: false}
+            ).addTo(map_3825da9f3bddd984c3d95370d7f9ee2c);
+        
+    
+            var marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8 = L.markerClusterGroup(
+                {}
+            );
+            map_3825da9f3bddd984c3d95370d7f9ee2c.addLayer(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_744e5a4a506a172a992d53755cc27c5e = L.marker(
+                [37.78, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_15d79d8eefebd49c6fd75a923b62859a = L.marker(
+                [37.77, -122.43],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_e16d1b64fc475f0b250b155d50c751e6 = L.marker(
+                [37.78, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_89ed8306c7ac40aad18832cf56445d74 = L.marker(
+                [37.78, -122.43],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_031820d89b19aa45476bfba8caa325d8 = L.marker(
+                [37.73, -122.48],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_f427b4a714cb9ee2fda0537ece040d2f = L.marker(
+                [37.75, -122.49],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_bf6b5747fb46b39c8f995466e005d526 = L.marker(
+                [37.74, -122.44],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_713bb1c51ca51066d5e245ddaf0bcf14 = L.marker(
+                [37.78, -122.48],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_d379a38cf0f88c5e2fdef9114cbb1230 = L.marker(
+                [37.78, -122.39],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_7f8fdad548116a144d6d6a6120e28563 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_934e6a1c1081c8f5c0b364824a356143 = L.marker(
+                [37.8, -122.43],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_0d2799d7acd1fd9255aef507efc97ae1 = L.marker(
+                [37.79, -122.39],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_22abb2112184f5b8c69a06852fff53a7 = L.marker(
+                [37.74, -122.47],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_e492f6120fbe0168b32bf4479c44db57 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_d13991fea1ab4f45dcac623e692c74f5 = L.marker(
+                [37.76, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_70e89217ecfb8446b557cadb5d1c2fe9 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_5818e3e924f59852db943105142cf802 = L.marker(
+                [37.79, -122.42],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_f17d63bcc0a51f45a8b4cb33af97668f = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_8c4524a8d7cd13c4288224b8535d7263 = L.marker(
+                [37.8, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_ed9e94e635cd7c18a2f8b10323e21652 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_d9dc76a380ca3e5200ed9d5fa457572a = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_23babc952db3cf501bcef3ddd46adf1d = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_47c115c27cbf2018c974ec21b0986127 = L.marker(
+                [37.76, -122.43],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_0a314de81f9bcd3eca22a791b3f0a4ed = L.marker(
+                [37.79, -122.45],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_af9dda7932d4ee82f1ebda14b80fbcb9 = L.marker(
+                [37.79, -122.44],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_0ba28c846203f8a15e53748d6f35799e = L.marker(
+                [37.76, -122.47],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_5070b364daa3564bce691cca0ad81673 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_579512b370444ad0fe2d58f603f894c1 = L.marker(
+                [37.8, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_caa633609746bd7e3064757fe84cf9a8 = L.marker(
+                [37.76, -122.46],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_58f4b4959e436cfc0d521610f550afe9 = L.marker(
+                [37.79, -122.39],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_aa79854fa055206844f0ab193c08ab4e = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_77abcbb6e929a1cadbfdf107bb5f0505 = L.marker(
+                [37.77, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_87939cb6fce98658edaff83a00098297 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_62f1e73f0e04a9490358f29d5b82b6a5 = L.marker(
+                [37.77, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_9d94c113d4a51db20b978bc577f92c75 = L.marker(
+                [37.8, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_a98f08a1b48bb37b4b18b8404f84b8fe = L.marker(
+                [37.79, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_aa255d92ad7f876246c074fdbbee7360 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_f4db838aa9bb2cd6fb0e937e8cb3bbe9 = L.marker(
+                [37.79, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_05496143d8713def5bd50ad93297b28f = L.marker(
+                [37.81, -122.42],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_d9d043be59da69a12d7c23f35693d371 = L.marker(
+                [37.73, -122.48],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_50b6a5e4eb73ad5ff582d32806150263 = L.marker(
+                [37.78, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_5fe3ce751036649beedbcfe75d484acf = L.marker(
+                [37.74, -122.39],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_efc78461d96a161865a4f6c26d5523c1 = L.marker(
+                [37.73, -122.46],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_2761bf72c2416f733de6365503078de4 = L.marker(
+                [37.78, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_14553517d508ea6215e17a6a2e9cd54a = L.marker(
+                [37.78, -122.45],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_c02357f2dabc72119199903b9dbee5af = L.marker(
+                [37.8, -122.43],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_bc10805634850597e2695e7c4a47761d = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_ece13bc2ef096d67515e9af24d358be3 = L.marker(
+                [37.78, -122.42],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_6a6278b389d549a5bd0ee7f3e2b6591c = L.marker(
+                [37.8, -122.39],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_30d6b9d05be0209842064b24e27651a4 = L.marker(
+                [37.8, -122.45],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_0153fac2de225775e87c96e346f876d9 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_97f9ead6918cf404c7b499e0d8b31caa = L.marker(
+                [37.81, -122.42],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_cc97dd71bb5e309da905a2058f5d30fb = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_b25ac93020541ac521cc7e7ec77f59f7 = L.marker(
+                [37.79, -122.43],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_011ebf1be904a080156f9bf9be40e675 = L.marker(
+                [37.78, -122.45],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_7156b7f228417388784f768bf925b98c = L.marker(
+                [37.79, -122.42],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_055f32321bf36f074e9d73bd97a7bb32 = L.marker(
+                [37.78, -122.39],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_226fccc30f976ece46c55d05deabb615 = L.marker(
+                [37.8, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_b6d88a992eea1625ca34f1dc97e5a96b = L.marker(
+                [37.79, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_4d69efc8e756ef80e8798386e7388db5 = L.marker(
+                [37.79, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_3f84877b8f7b2b942e6d1567b8024909 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_883d4c8f74687755551ab1217a3cb9f4 = L.marker(
+                [37.8, -122.42],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_9dbd06a390d9d85261d09d62fc321904 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_c2cd6ea28b7802cd4f02599b1715a8e3 = L.marker(
+                [37.78, -122.43],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_feafa9eea93dd2daa03552165fbc6e18 = L.marker(
+                [37.79, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_26195273a37cb02ad690e54b89d0e54c = L.marker(
+                [37.79, -122.43],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_3ca8fcebcbdd79eb9dfd843def953507 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_d55c29a228a6a3579572ebe785fae6b3 = L.marker(
+                [37.78, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_e7598072a31ad1a50513911ff3be342a = L.marker(
+                [37.8, -122.44],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_1b17bbac4b39893bc8616606633d16c2 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_9d90c6961bbfc3180ae671b47e6dd308 = L.marker(
+                [37.79, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_03a09515cbcdf5b3fb785e355517a96b = L.marker(
+                [37.77, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_959c015a01533c7a04fbdc57db523849 = L.marker(
+                [37.79, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_6a0338dcca323372314d1ef1ac4f6fcf = L.marker(
+                [37.77, -122.43],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_d8c28a966a3aca9dfffe4dfe343f01a5 = L.marker(
+                [37.79, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_6f573fa0c83acb1ab9f16c46712e7a81 = L.marker(
+                [37.74, -122.45],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_e3134a93dbdaa10d2968647ed927c916 = L.marker(
+                [37.81, -122.42],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_c5dffaaa384085111bf19a239c271160 = L.marker(
+                [37.79, -122.39],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_3151d83e4d77aef5de8f6e854917e75c = L.marker(
+                [37.78, -122.42],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_d52db76ff7455675008b28e5943997f2 = L.marker(
+                [37.77, -122.39],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_2b5f77cb9981f42a5f38c8699c1fc615 = L.marker(
+                [37.78, -122.41],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_db92994c783358d720d272d4dbdb3792 = L.marker(
+                [37.76, -122.48],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_6577314a92685c3fe8bd5107412d277d = L.marker(
+                [37.78, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_7e2fc811d46bc8a8274140760fdf0abc = L.marker(
+                [37.75, -122.43],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_a68cbaaf53d01a9b9587f8eeb77f4a30 = L.marker(
+                [37.77, -122.39],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_d9fcc93d44fba1c5f3f21e7528b20f11 = L.marker(
+                [37.79, -122.4],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+    
+            var marker_555703ea02ee4c2a5a3e552bf701955f = L.marker(
+                [37.79, -122.39],
+                {}
+            ).addTo(marker_cluster_9a242394fdf7e3ed041c04f268cd1ad8);
+        
+</script>
+</html>" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""></iframe></div></div>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

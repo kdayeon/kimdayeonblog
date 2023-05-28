@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="kim dayeon">
-<meta name="dcterms.date" content="2023-05-21">
+<meta name="dcterms.date" content="2023-05-29">
 
 <title>dayeon blog - 4. pydeck-example</title>
 <style>
@@ -123,6 +123,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -257,7 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 21, 2023</p>
+      <p class="date">May 29, 2023</p>
     </div>
   </div>
   
@@ -271,7 +274,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Introduction</h1>
 <p>In this tutorial, you’ll explore several techniques for proximity analysis. In particular, you’ll learn how to do such things as:</p>
 <p>measure the distance between points on a map, and select all points within some radius of a feature.</p>
-<div class="cell">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> folium <span class="im">import</span> Marker, GeoJson</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> folium.plugins <span class="im">import</span> HeatMap</span>
@@ -279,36 +282,318 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>releases <span class="op">=</span> gpd.read_file(<span class="st">"../input/geospatial-learn-course-data/toxic_release_pennsylvania/toxic_release_pennsylvania/toxic_release_pennsylvania.shp"</span>) </span>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>releases <span class="op">=</span> gpd.read_file(<span class="st">"D:/archive (1)/toxic_release_pennsylvania/toxic_release_pennsylvania/toxic_release_pennsylvania.shp"</span>) </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>releases.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>YEAR</th>
+      <th>CITY</th>
+      <th>COUNTY</th>
+      <th>ST</th>
+      <th>LATITUDE</th>
+      <th>LONGITUDE</th>
+      <th>CHEMICAL</th>
+      <th>UNIT_OF_ME</th>
+      <th>TOTAL_RELE</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2016</td>
+      <td>PHILADELPHIA</td>
+      <td>PHILADELPHIA</td>
+      <td>PA</td>
+      <td>40.005901</td>
+      <td>-75.072103</td>
+      <td>FORMIC ACID</td>
+      <td>Pounds</td>
+      <td>0.160</td>
+      <td>POINT (2718560.227 256380.179)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2016</td>
+      <td>PHILADELPHIA</td>
+      <td>PHILADELPHIA</td>
+      <td>PA</td>
+      <td>39.920120</td>
+      <td>-75.146410</td>
+      <td>ETHYLENE GLYCOL</td>
+      <td>Pounds</td>
+      <td>13353.480</td>
+      <td>POINT (2698674.606 224522.905)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2016</td>
+      <td>PHILADELPHIA</td>
+      <td>PHILADELPHIA</td>
+      <td>PA</td>
+      <td>40.023880</td>
+      <td>-75.220450</td>
+      <td>CERTAIN GLYCOL ETHERS</td>
+      <td>Pounds</td>
+      <td>104.135</td>
+      <td>POINT (2676833.394 261701.856)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2016</td>
+      <td>PHILADELPHIA</td>
+      <td>PHILADELPHIA</td>
+      <td>PA</td>
+      <td>39.913540</td>
+      <td>-75.198890</td>
+      <td>LEAD COMPOUNDS</td>
+      <td>Pounds</td>
+      <td>1730.280</td>
+      <td>POINT (2684030.004 221697.388)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2016</td>
+      <td>PHILADELPHIA</td>
+      <td>PHILADELPHIA</td>
+      <td>PA</td>
+      <td>39.913540</td>
+      <td>-75.198890</td>
+      <td>BENZENE</td>
+      <td>Pounds</td>
+      <td>39863.290</td>
+      <td>POINT (2684030.004 221697.388)</td>
+    </tr>
+  </tbody>
+</table>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>stations <span class="op">=</span> gpd.read_file(<span class="st">"../input/geospatial-learn-course-data/PhillyHealth_Air_Monitoring_Stations/PhillyHealth_Air_Monitoring_Stations/PhillyHealth_Air_Monitoring_Stations.shp"</span>)</span>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>stations <span class="op">=</span> gpd.read_file(<span class="st">"D:/archive (1)/PhillyHealth_Air_Monitoring_Stations/PhillyHealth_Air_Monitoring_Stations/PhillyHealth_Air_Monitoring_Stations.shp"</span>) </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>stations.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>SITE_NAME</th>
+      <th>ADDRESS</th>
+      <th>BLACK_CARB</th>
+      <th>ULTRAFINE_</th>
+      <th>CO</th>
+      <th>SO2</th>
+      <th>OZONE</th>
+      <th>NO2</th>
+      <th>NOY_NO</th>
+      <th>PM10</th>
+      <th>...</th>
+      <th>PAMS_VOC</th>
+      <th>TSP_11101</th>
+      <th>TSP_METALS</th>
+      <th>TSP_LEAD</th>
+      <th>TOXICS_TO1</th>
+      <th>MET</th>
+      <th>COMMUNITY_</th>
+      <th>LATITUDE</th>
+      <th>LONGITUDE</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>LAB</td>
+      <td>1501 East Lycoming Avenue</td>
+      <td>N</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>...</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>y</td>
+      <td>N</td>
+      <td>N</td>
+      <td>40.008606</td>
+      <td>-75.097624</td>
+      <td>POINT (2711384.641 257149.310)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ROX</td>
+      <td>Eva and Dearnley Streets</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>...</td>
+      <td>N</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>N</td>
+      <td>40.050461</td>
+      <td>-75.236966</td>
+      <td>POINT (2671934.290 271248.900)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NEA</td>
+      <td>Grant Avenue and Ashton Street</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>...</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>40.072073</td>
+      <td>-75.013128</td>
+      <td>POINT (2734326.638 280980.247)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>CHS</td>
+      <td>500 South Broad Street</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>...</td>
+      <td>N</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>N</td>
+      <td>39.944510</td>
+      <td>-75.165442</td>
+      <td>POINT (2693078.580 233247.101)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NEW</td>
+      <td>2861 Lewis Street</td>
+      <td>N</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>...</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>N</td>
+      <td>39.991688</td>
+      <td>-75.080378</td>
+      <td>POINT (2716399.773 251134.976)</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 24 columns</p>
+</div>
+</div>
 </div>
 </section>
 <section id="measuring-distance" class="level1">
 <h1>Measuring distance</h1>
 <p>To measure distances between points from two different GeoDataFrames, we first have to make sure that they use the same coordinate reference system (CRS). Thankfully, this is the case here, where both use EPSG 2272.</p>
-<div class="cell">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stations.crs)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(releases.crs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(releases.crs)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#미국은 fit를 사용하기 때문에 주의 해야함</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>EPSG:2272
+EPSG:2272</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select one release incident in particular</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>recent_release <span class="op">=</span> releases.iloc[<span class="dv">360</span>]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Measure distance from release to each station</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>distances <span class="op">=</span> stations.geometry.distance(recent_release.geometry)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>distances</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Mean distance to monitoring stations: </span><span class="sc">{}</span><span class="st"> feet'</span>.<span class="bu">format</span>(distances.mean()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select one release incident in particular</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>recent_release <span class="op">=</span> releases.iloc[<span class="dv">360</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Measure distance from release to each station</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#distance :거리 계산하는 함수</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>distances <span class="op">=</span> stations.geometry.distance(recent_release.geometry)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>distances   <span class="co">#station과 recent_releas 사이의 거리 계산 해준것</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>0     44778.509761
+1     51006.456589
+2     77744.509207
+3     14672.170878
+4     43753.554393
+5      4711.658655
+6     23197.430858
+7     12072.823097
+8     79081.825506
+9      3780.623591
+10    27577.474903
+11    19818.381002
+dtype: float64</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Closest monitoring station (</span><span class="sc">{}</span><span class="st"> feet):'</span>.<span class="bu">format</span>(distances.<span class="bu">min</span>()))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stations.iloc[distances.idxmin()][[<span class="st">"ADDRESS"</span>, <span class="st">"LATITUDE"</span>, <span class="st">"LONGITUDE"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Mean distance to monitoring stations: </span><span class="sc">{}</span><span class="st"> feet'</span>.<span class="bu">format</span>(distances.mean()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Mean distance to monitoring stations: 33516.28487007786 feet</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Closest monitoring station (</span><span class="sc">{}</span><span class="st"> feet):'</span>.<span class="bu">format</span>(distances.<span class="bu">min</span>()))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stations.iloc[distances.idxmin()][[<span class="st">"ADDRESS"</span>, <span class="st">"LATITUDE"</span>, <span class="st">"LONGITUDE"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Closest monitoring station (3780.623590556444 feet):
+ADDRESS      3100 Penrose Ferry Road
+LATITUDE                    39.91279
+LONGITUDE                 -75.185448
+Name: 9, dtype: object</code></pre>
+</div>
 </div>
 </section>
 <section id="creating-a-buffer" class="level1">
@@ -316,37 +601,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If we want to understand all points on a map that are some radius away from a point, the simplest way is to create a buffer.</p>
 <p>The code cell below creates a GeoSeries two_mile_buffer containing 12 different Polygon objects. Each polygon is a buffer of 2 miles (or, 2*5280 feet) around a different air monitoring station.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>two_mile_buffer <span class="op">=</span> stations.geometry.<span class="bu">buffer</span>(<span class="dv">2</span><span class="op">*</span><span class="dv">5280</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>two_mile_buffer.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>two_mile_buffer <span class="op">=</span> stations.geometry.<span class="bu">buffer</span>(<span class="dv">2</span><span class="op">*</span><span class="dv">5280</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>two_mile_buffer.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create map with release incidents and monitoring stations</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> folium.Map(location<span class="op">=</span>[<span class="fl">39.9526</span>,<span class="op">-</span><span class="fl">75.1652</span>], zoom_start<span class="op">=</span><span class="dv">11</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>HeatMap(data<span class="op">=</span>releases[[<span class="st">'LATITUDE'</span>, <span class="st">'LONGITUDE'</span>]], radius<span class="op">=</span><span class="dv">15</span>).add_to(m)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> stations.iterrows():</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    Marker([row[<span class="st">'LATITUDE'</span>], row[<span class="st">'LONGITUDE'</span>]]).add_to(m)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot each polygon on the map</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>GeoJson(two_mile_buffer.to_crs(epsg<span class="op">=</span><span class="dv">4326</span>)).add_to(m)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the map</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create map with release incidents and monitoring stations</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> folium.Map(location<span class="op">=</span>[<span class="fl">39.9526</span>,<span class="op">-</span><span class="fl">75.1652</span>], zoom_start<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>HeatMap(data<span class="op">=</span>releases[[<span class="st">'LATITUDE'</span>, <span class="st">'LONGITUDE'</span>]], radius<span class="op">=</span><span class="dv">15</span>).add_to(m)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, row <span class="kw">in</span> stations.iterrows():</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    Marker([row[<span class="st">'LATITUDE'</span>], row[<span class="st">'LONGITUDE'</span>]]).add_to(m)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot each polygon on the map</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>GeoJson(two_mile_buffer.to_crs(epsg<span class="op">=</span><span class="dv">4326</span>)).add_to(m)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the map</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>m</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn group of polygons into single multipolygon</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>my_union <span class="op">=</span> two_mile_buffer.geometry.unary_union</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Type:'</span>, <span class="bu">type</span>(my_union))</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the MultiPolygon object</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>my_union</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn group of polygons into single multipolygon</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>my_union <span class="op">=</span> two_mile_buffer.geometry.unary_union</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Type:'</span>, <span class="bu">type</span>(my_union))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the MultiPolygon object</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>my_union</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The closest station is less than two miles away</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>my_union.contains(releases.iloc[<span class="dv">360</span>].geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The closest station is less than two miles away</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>my_union.contains(releases.iloc[<span class="dv">360</span>].geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The closest station is more than two miles away</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>my_union.contains(releases.iloc[<span class="dv">358</span>].geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The closest station is more than two miles away</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>my_union.contains(releases.iloc[<span class="dv">358</span>].geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
